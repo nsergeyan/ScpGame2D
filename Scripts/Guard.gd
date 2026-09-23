@@ -22,6 +22,8 @@ enum State { PATROL, ALERT, STUNNED, DEAD }
 @export var alert_memory: float = 2.0
 
 const BULLET_SCENE := preload("res://Scenes/Enemies/Bullet.tscn")
+const SPOT_LINES := 4
+const SPOT_COOLDOWN_MSEC := 3500
 
 var hp: int = 2
 var state: State = State.PATROL
@@ -35,6 +37,7 @@ var aim_target: Vector2 = Vector2.ZERO
 var hit_flash: float = 0.0
 var invuln: float = 0.0
 var ledge_ray: RayCast2D
+static var _last_spot_msec: int = -999999
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var alert_mark: Label = $AlertMark
@@ -146,12 +149,22 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_visuals()
 
+# Radio call-out when a guard first sees the player. The cooldown is static,
+# so if three guards spot him at once only one of them speaks.
+func _say_spotted() -> void:
+	var now := Time.get_ticks_msec()
+	if now - _last_spot_msec < SPOT_COOLDOWN_MSEC:
+		return
+	_last_spot_msec = now
+	AudioManager.play("guard_spot_%d" % (randi() % SPOT_LINES + 1), -3.0)
+
 func _do_patrol(p: Node2D) -> void:
 	if kind == Kind.RIFLE:
 		velocity.x = 0.0
 		if p and _can_see(p):
 			state = State.ALERT
 			fire_timer = 0.6
+			_say_spotted()
 		return
 	if patrol_distance <= 0.0:
 		velocity.x = 0.0
@@ -164,7 +177,7 @@ func _do_patrol(p: Node2D) -> void:
 	if p and _can_see(p):
 		state = State.ALERT
 		alert_timer = alert_memory
-		AudioManager.play("guard_hit", -12.0, 1.6)
+		_say_spotted()
 
 func _do_alert(p: Node2D, delta: float) -> void:
 	if kind == Kind.RIFLE:

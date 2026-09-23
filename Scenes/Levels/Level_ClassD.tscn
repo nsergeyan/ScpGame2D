@@ -522,42 +522,6 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
 text = "CELL BLOCK C"
 
-[node name="HintMove" type="Label" parent="WallText" unique_id=1547630709]
-offset_left = 896.0
-offset_top = 215.0
-offset_right = 896.0
-offset_bottom = 215.0
-theme_override_fonts/font = ExtResource("28_1gt32")
-theme_override_font_sizes/font_size = 30
-theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 6
-text = "A / D  or  ARROWS  -  move"
-
-[node name="HintJump" type="Label" parent="WallText" unique_id=430389961]
-offset_left = 896.0
-offset_top = 265.0
-offset_right = 896.0
-offset_bottom = 265.0
-theme_override_fonts/font = ExtResource("28_1gt32")
-theme_override_font_sizes/font_size = 26
-theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 6
-text = "SPACE  -  jump   (again in mid-air = DOUBLE JUMP)"
-
-[node name="HintSpike" type="Label" parent="WallText" unique_id=862200172]
-offset_left = 1216.0
-offset_top = 320.0
-offset_right = 1216.0
-offset_bottom = 320.0
-theme_override_fonts/font = ExtResource("28_1gt32")
-theme_override_font_sizes/font_size = 24
-theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 6
-text = "Spikes! Jump over them"
-
 [node name="HintStatue1" type="Label" parent="WallText" unique_id=1718897369]
 offset_left = 9152.0
 offset_top = 300.0

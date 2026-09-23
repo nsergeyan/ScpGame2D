@@ -26,7 +26,6 @@ const SPOT_LINES := 4
 const LOST_LINES := 3
 const FIRE_LINES := 2
 const DIE_LINES := 2
-const VOICE_COOLDOWN_MSEC := 2000
 
 var hp: int = 2
 var state: State = State.PATROL
@@ -41,7 +40,6 @@ var hit_flash: float = 0.0
 var invuln: float = 0.0
 var ledge_ray: RayCast2D
 var announced_fire: bool = false   # per guard: he only calls the shot once per engagement
-static var _last_voice_msec: int = -999999
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var alert_mark: Label = $AlertMark
@@ -100,7 +98,7 @@ func _die(dir: int) -> void:
 	set_deferred("collision_layer", 0)
 	alert_mark.visible = false
 	AudioManager.play("guard_down")
-	_say("guard_die", DIE_LINES)
+	_say("guard_die", DIE_LINES, true)
 	aim_timer = 0.0
 	queue_redraw()
 	var tw := create_tween()
@@ -155,17 +153,13 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_visuals()
 
-# Radio chatter. The cooldown is static, shared by every guard, so they never
-# talk over each other no matter how many see the player at once.
-func _say(prefix: String, count: int) -> bool:
+# Radio chatter. AudioManager holds a single guard voice channel, so only one
+# line plays at a time however many guards are alive, and it frees up exactly
+# when the clip ends rather than after a guessed cooldown. Death cries interrupt.
+func _say(prefix: String, count: int, interrupt: bool = false) -> bool:
 	if GameManager.announcing or GameManager.voice_busy:
 		return false   # never talk over a facility announcement
-	var now := Time.get_ticks_msec()
-	if now - _last_voice_msec < VOICE_COOLDOWN_MSEC:
-		return false
-	_last_voice_msec = now
-	AudioManager.play("%s_%d" % [prefix, randi() % count + 1], -3.0)
-	return true
+	return AudioManager.play_voice("%s_%d" % [prefix, randi() % count + 1], -3.0, interrupt)
 
 func _do_patrol(p: Node2D) -> void:
 	if kind == Kind.RIFLE:
@@ -195,7 +189,8 @@ func _do_alert(p: Node2D, delta: float) -> void:
 			aim_timer = 0.0
 			state = State.PATROL
 			announced_fire = false
-			_say("guard_lost", LOST_LINES)
+			if p != null:   # the player died; nothing was lost track of
+				_say("guard_lost", LOST_LINES)
 			queue_redraw()
 			return
 		_face(1 if p.global_position.x > global_position.x else -1)
@@ -220,7 +215,8 @@ func _do_alert(p: Node2D, delta: float) -> void:
 		alert_timer -= delta
 	if p == null or alert_timer <= 0.0:
 		state = State.PATROL
-		_say("guard_lost", LOST_LINES)
+		if p != null:   # the player died; nothing was lost track of
+			_say("guard_lost", LOST_LINES)
 		return
 	_face(1 if p.global_position.x > global_position.x else -1)
 	if not ledge_ray.is_colliding():

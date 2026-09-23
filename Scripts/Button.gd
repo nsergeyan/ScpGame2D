@@ -25,5 +25,4 @@ func _physics_process(_delta: float) -> void:
 			_set_region(1)
 			AudioManager.play("button")
 			get_tree().call_group("door_" + channel, "open")
-			GameManager.show_message("Button pressed - a door has unlocked!", 2.5)
 			break

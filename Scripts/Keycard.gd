@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 			taken = true
 			GameManager.has_keycard = true
 			AudioManager.play("keycard")
-			GameManager.show_message("KEYCARD ACQUIRED! The alarm is blaring - RUN to the exit!", 4.0)
+			GameManager.show_message("KEYCARD ACQUIRED! The alarm is blaring - RUN to the exit!", 4.0, true)
 			if triggers_alarm:
 				GameManager.alarm_on = true
 				AudioManager.start_alarm()

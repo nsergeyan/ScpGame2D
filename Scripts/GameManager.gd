@@ -14,6 +14,7 @@ var run_time: float = 0.0
 var timer_running: bool = false
 var announcing: bool = false 
 var voice_busy: bool = false # a PA announcement is playing: guards stay quiet
+var message_until_msec: int = 0 # an important message holds the box until this time
 var hp: int = 3
 var max_hp: int = 3
 
@@ -38,6 +39,7 @@ func reset_run() -> void:
 	timer_running = false
 	announcing = false
 	voice_busy = false
+	message_until_msec = 0
 	has_keycard = false
 	alarm_on = false
 	AudioManager.stop_alarm()
@@ -50,8 +52,18 @@ func set_hp(new_hp: int, new_max: int) -> void:
 	max_hp = new_max
 	hp_changed.emit(hp, max_hp)
 
-func show_message(text: String, duration: float = 3.0) -> void:
+# Everything shares one message box, so a hint walked into mid-announcement
+# used to wipe the subtitle off the screen. Important messages (announcements,
+# story beats) reserve the box; ordinary ones are dropped while it is held.
+# Returns whether the message was actually shown.
+func show_message(text: String, duration: float = 3.0, important: bool = false) -> bool:
+	var now := Time.get_ticks_msec()
+	if not important and now < message_until_msec:
+		return false
+	if important:
+		message_until_msec = now + int(duration * 1000.0)
 	message.emit(text, duration)
+	return true
 
 # Plays a voice clip and splits its subtitle across lines, each shown for a
 # share of the audio proportional to its length. Kept here rather than on the
@@ -65,7 +77,7 @@ func announce(sfx: String, lines: Array[String]) -> void:
 		chars += l.length()
 	for l in lines:
 		var dur: float = total * float(l.length()) / maxf(chars, 1.0)
-		show_message(l, dur + 0.3)
+		show_message(l, dur + 0.3, true)
 		await get_tree().create_timer(dur).timeout
 	voice_busy = false
 

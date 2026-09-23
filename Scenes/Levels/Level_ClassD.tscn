@@ -271,7 +271,7 @@ collision_layer = 0
 collision_mask = 8
 script = ExtResource("8_e2br2")
 size = Vector2(64, 420)
-text = "Press F to PUNCH.  Jump on a guard's head to STOMP him!"
+text = "F to punch. Landing on a guard's head takes him down too."
 text_time = 5.0
 
 [node name="Hint_41" type="Area2D" parent="Hints" unique_id=2036117722 instance=ExtResource("7_s33qs")]
@@ -280,15 +280,7 @@ collision_layer = 0
 collision_mask = 8
 script = ExtResource("8_e2br2")
 size = Vector2(64, 420)
-text = "Some platforms crumble - keep moving! A double jump also clears the gap."
-
-[node name="Hint_51" type="Area2D" parent="Hints" unique_id=716102528 instance=ExtResource("7_s33qs")]
-position = Vector2(3296, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("8_e2br2")
-size = Vector2(64, 420)
-text = "Climb up and step on the button to unlock the door."
+text = "These platforms will not hold you."
 
 [node name="Hint_64" type="Area2D" parent="Hints" unique_id=1817006534 instance=ExtResource("7_s33qs")]
 position = Vector2(4128, 576)
@@ -296,35 +288,8 @@ collision_layer = 0
 collision_mask = 8
 script = ExtResource("8_e2br2")
 size = Vector2(64, 420)
-text = "Security lasers! Wait for the beam to switch off, then run through."
+text = "Security lasers. They cycle."
 text_time = 4.5
-
-[node name="Hint_77" type="Area2D" parent="Hints" unique_id=2115564918 instance=ExtResource("7_s33qs")]
-position = Vector2(4960, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("8_e2br2")
-size = Vector2(64, 420)
-text = "Rifle guard ahead! Hide behind the crates, then dash to the next one."
-text_time = 4.5
-
-[node name="Hint_101" type="Area2D" parent="Hints" unique_id=2383395 instance=ExtResource("7_s33qs")]
-position = Vector2(6496, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("8_e2br2")
-size = Vector2(64, 420)
-text = "Moving platforms - time your jumps!"
-text_time = 3.5
-
-[node name="Hint_113" type="Area2D" parent="Hints" unique_id=63789783 instance=ExtResource("7_s33qs")]
-position = Vector2(7264, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("8_e2br2")
-size = Vector2(64, 420)
-text = "The floor is crumbling - don't stop moving!"
-text_time = 3.5
 
 [node name="Hint_141" type="Area2D" parent="Hints" unique_id=1811202246 instance=ExtResource("7_s33qs")]
 position = Vector2(9056, 576)
@@ -332,7 +297,7 @@ collision_layer = 0
 collision_mask = 8
 script = ExtResource("8_e2br2")
 size = Vector2(64, 420)
-text = "SCP-173 ahead. It only moves when you are NOT facing it. Keep it in sight and jump over it!"
+text = "SCP-173. It moves only when you look away."
 text_time = 6.0
 
 [node name="Trigger_Statue" type="Area2D" parent="Hints" unique_id=1218730004 instance=ExtResource("7_s33qs")]
@@ -343,24 +308,6 @@ script = ExtResource("8_e2br2")
 size = Vector2(64, 420)
 call_group = "SCP"
 call_method = "activate"
-
-[node name="Hint_179" type="Area2D" parent="Hints" unique_id=2090456583 instance=ExtResource("7_s33qs")]
-position = Vector2(11488, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("8_e2br2")
-size = Vector2(64, 420)
-text = "Crumbling platforms over the acid - keep moving!"
-text_time = 3.5
-
-[node name="Hint_190" type="Area2D" parent="Hints" unique_id=1771564101 instance=ExtResource("7_s33qs")]
-position = Vector2(12192, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("8_e2br2")
-size = Vector2(64, 420)
-text = "Last guard! Use the crates as cover, then take him down and reach the EXIT."
-text_time = 4.5
 
 [node name="Platforms" type="Node2D" parent="." unique_id=1587079752]
 

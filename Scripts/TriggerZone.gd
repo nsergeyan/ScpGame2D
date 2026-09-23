@@ -29,9 +29,9 @@ func _physics_process(_delta: float) -> void:
 		return
 	for b in get_overlapping_bodies():
 		if b.is_in_group("Player"):
-			fired = true
-			if text != "":
-				GameManager.show_message(text, text_time)
 			if call_group != "":
+				fired = true
 				get_tree().call_group(call_group, call_method)
+			if text != "" and GameManager.show_message(text, text_time):
+				fired = true
 			break

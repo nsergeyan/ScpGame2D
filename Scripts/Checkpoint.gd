@@ -17,5 +17,4 @@ func _physics_process(_delta: float) -> void:
 			b.heal_full()
 			sprite.region_rect = Rect2(5 * 64, 3 * 64, 64, 64)
 			AudioManager.play("checkpoint", -4.0)
-			GameManager.show_message("CHECKPOINT REACHED", 2.0)
 			break

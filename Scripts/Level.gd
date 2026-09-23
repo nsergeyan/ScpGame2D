@@ -73,7 +73,7 @@ func _run_announcement() -> void:
 		if skipped:
 			break
 		var dur := total * float(l.length()) / maxf(chars, 1.0)
-		GameManager.show_message(l, dur + 0.3)
+		GameManager.show_message(l, dur + 0.3, true)
 		var t := 0.0
 		while t < dur and not skipped:
 			await get_tree().process_frame
@@ -85,5 +85,5 @@ func _run_announcement() -> void:
 	_open_cell()
 
 func _open_cell() -> void:
-	GameManager.show_message("POWER FAILURE - CELL DOOR RELEASED. GO!", 3.0)
+	GameManager.show_message("POWER FAILURE - CELL DOOR RELEASED. GO!", 3.0, true)
 	get_tree().call_group("door_cell", "open")

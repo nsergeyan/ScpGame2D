@@ -41,6 +41,7 @@ const PATHS := {
 var streams := {}
 var pool: Array[AudioStreamPlayer] = []
 var music_player: AudioStreamPlayer
+var voice_player: AudioStreamPlayer
 var alarm_player: AudioStreamPlayer
 var music_on := false
 var alarm_active := false
@@ -53,6 +54,8 @@ func _ready() -> void:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
 		pool.append(p)
+	voice_player = AudioStreamPlayer.new()
+	add_child(voice_player)
 	music_player = AudioStreamPlayer.new()
 	add_child(music_player)
 	music_player.finished.connect(func(): if music_on: music_player.play())
@@ -75,6 +78,19 @@ func play(sfx_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	pool[0].volume_db = volume_db
 	pool[0].pitch_scale = pitch
 	pool[0].play()
+
+# One shared channel for guard radio chatter, so two guards can never talk over
+# each other. Returns false when a line is already playing and interrupt is off,
+# which lets the caller know it was not heard. Death cries pass interrupt.
+func play_voice(sfx_name: String, volume_db: float = -3.0, interrupt: bool = false) -> bool:
+	if not streams.has(sfx_name) or streams[sfx_name] == null:
+		return false
+	if voice_player.playing and not interrupt:
+		return false
+	voice_player.stream = streams[sfx_name]
+	voice_player.volume_db = volume_db
+	voice_player.play()
+	return true
 
 func length_of(sfx_name: String) -> float:
 	if streams.has(sfx_name) and streams[sfx_name]:

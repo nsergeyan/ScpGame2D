@@ -28,7 +28,7 @@ func activate() -> void:
 	if active or gone:
 		return
 	active = true
-	GameManager.show_message("SCP-173 is awake! It moves when you look away. Keep it in sight!", 4.0)
+	GameManager.show_message("SCP-173 is awake! It moves when you look away. Keep it in sight!", 4.0, true)
 
 func reset_to_start() -> void:
 	global_position = home
@@ -80,5 +80,5 @@ func _physics_process(delta: float) -> void:
 		gone = true
 		visible = false
 		shape.set_deferred("disabled", true)
-		GameManager.show_message("SCP-173 fell into the acid... Keep moving!", 3.0)
+		GameManager.show_message("SCP-173 fell into the acid... Keep moving!", 3.0, true)
 		AudioManager.stop_alarm()   # siren stops, red lights keep pulsing until you escape

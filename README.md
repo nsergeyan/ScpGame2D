@@ -9,25 +9,32 @@ SCP-173.
 
 ## Features
 
+- **SCP archive**: every document you recover is a real SCP Foundation file,
+  readable in a pause screen. Uncollected slots read `[ REDACTED ]`, so the
+  archive doubles as a collection tracker and a reason to explore.
+- **Ranked escape**: the ending grades your run out of 100 on intel recovered
+  (50), surviving (30) and speed (20), mapped to S through D.
 - **SCP-173 pursuit AI**: the statue is frozen while you face it and charges
   the moment you look away. It cannot be killed, only outrun or lured into a
   pit.
 - **Guard AI state machine**: patrol, alert, stunned and dead states. Guards
   use raycast line-of-sight, so walls break their vision, and a downward
   raycast stops patrols walking off ledges. Rifle guards telegraph their shots
-  with a red laser sight.
+  with a red laser sight and call out over the radio.
 - **Platformer game feel**: coyote time, jump buffering, variable jump height,
   asymmetric gravity, squash-and-stretch, camera look-ahead and screen shake.
 - **Level hazards**: timed laser barriers, crumbling platforms, moving
   platforms, channel-based button and door puzzles, checkpoints.
+- **Voiced facility PA** and twelve lines of guard radio chatter.
 
 ## Controls
 
 | Action | Keys |
 |---|---|
-| Move | `A` / `D` or arrow keys |
+| Move | `A` / `D` |
 | Jump / double jump | `SPACE` or `W` |
 | Punch | `F` or `J` |
+| Open archive | `TAB` |
 | Skip intro | `ENTER` |
 
 ## Running it
@@ -38,12 +45,13 @@ Open the project folder in Godot 4.7 and press `F5`, or from a terminal:
 
 ## Architecture
 
-Three autoloaded singletons hold global state, declared in `project.godot`:
+Four autoloaded singletons hold global state, declared in `project.godot`:
 
 | Autoload | Responsibility |
 |---|---|
-| `GameManager` | HP, score, deaths, run timer, keycard and alarm flags |
-| `AudioManager` | pooled sound effects, looping music and alarm |
+| `GameManager` | HP, score, deaths, run timer, keycard and alarm flags, archive progress |
+| `AudioManager` | pooled sound effects, music, guard voice channel, alarm |
+| `ArchiveUI` | the pause-screen archive, built in code so it exists on every screen |
 | `SceneTransition` | fade animation between scenes |
 
 Objects communicate in three ways, and nothing in the project does it a fourth
@@ -59,6 +67,30 @@ way:
 3. **Duck typing** for interactions. The punch calls `take_hit()` on anything
    that has the method, so guards and the statue respond differently to the
    same code path.
+
+### Notable decisions
+
+**Archive entries assign themselves.** The level is linear, so `Level.gd` sorts
+the `documents` group by X position and hands out entries in that order. The
+first document you meet is entry 1, with no per-node setup in the editor.
+
+**Guard chatter owns one audio channel.** Whether a guard may speak is answered
+by asking whether that channel is busy, not by a timer guessing at clip length.
+Death cries pass an `interrupt` flag and take the channel mid-sentence.
+
+**Messages have priority.** Everything shares one message box, so a hint walked
+into mid-announcement used to wipe the subtitle. `show_message` takes an
+`important` flag that reserves the box, and returns whether it displayed, so a
+suppressed hint can retry rather than being silently lost.
+
+**Pausing means three things.** Opening the archive pauses the scene tree,
+`AudioManager`'s players (which run with `PROCESS_MODE_ALWAYS` and therefore
+ignore tree pause), and the announcement timers (`SceneTree.create_timer`
+defaults `process_always` to `true`).
+
+**UI styling lives in one theme.** `Assets/UI/facility_theme.tres` is registered
+as the project-wide default, with a `Display` type variation carrying the
+heading font.
 
 ## Credits
 

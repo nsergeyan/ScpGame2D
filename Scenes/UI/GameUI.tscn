@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://igdlhq4tmj5d" path="res://Scripts/GameUI.gd" id="1_xkiwj"]
 [ext_resource type="Texture2D" uid="uid://jaegp53ccc7w" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_tog36"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_npa51"]
-atlas = ExtResource("2_tog36")
-region = Rect2(520, 208, 48, 32)
+[ext_resource type="Texture2D" path="res://Assets/Sprites/document.png" id="4_doc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_intyv"]
 atlas = ExtResource("2_tog36")
@@ -60,15 +58,15 @@ offset_bottom = 66.0
 [node name="DocsIcon" type="TextureRect" parent="Docs" unique_id=422160768]
 layout_mode = 0
 offset_right = 48.0
-offset_bottom = 32.0
-texture = SubResource("AtlasTexture_npa51")
+offset_bottom = 48.0
+texture = ExtResource("4_doc")
 
 [node name="DocsLabel" type="Label" parent="Docs" unique_id=1154058655]
 layout_mode = 0
 offset_left = 56.0
-offset_top = -6.0
+offset_top = 4.0
 offset_right = 56.0
-offset_bottom = -6.0
+offset_bottom = 4.0
 theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
 theme_type_variation = &"Display"
 theme_override_font_sizes/font_size = 28

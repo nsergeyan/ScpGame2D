@@ -23,7 +23,9 @@ enum State { PATROL, ALERT, STUNNED, DEAD }
 
 const BULLET_SCENE := preload("res://Scenes/Enemies/Bullet.tscn")
 const SPOT_LINES := 4
-const SPOT_COOLDOWN_MSEC := 3500
+const LOST_LINES := 3
+const FIRE_LINES := 2
+const VOICE_COOLDOWN_MSEC := 2000
 
 var hp: int = 2
 var state: State = State.PATROL
@@ -37,7 +39,8 @@ var aim_target: Vector2 = Vector2.ZERO
 var hit_flash: float = 0.0
 var invuln: float = 0.0
 var ledge_ray: RayCast2D
-static var _last_spot_msec: int = -999999
+var announced_fire: bool = false   # per guard: he only calls the shot once per engagement
+static var _last_voice_msec: int = -999999
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var alert_mark: Label = $AlertMark
@@ -61,6 +64,7 @@ func reset_to_start() -> void:
 	global_position = home
 	velocity = Vector2.ZERO
 	state = State.PATROL
+	announced_fire = false
 	facing = start_facing
 	aim_timer = 0.0
 	fire_timer = 1.0
@@ -149,14 +153,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_visuals()
 
-# Radio call-out when a guard first sees the player. The cooldown is static,
-# so if three guards spot him at once only one of them speaks.
-func _say_spotted() -> void:
+# Radio chatter. The cooldown is static, shared by every guard, so they never
+# talk over each other no matter how many see the player at once.
+func _say(prefix: String, count: int) -> bool:
 	var now := Time.get_ticks_msec()
-	if now - _last_spot_msec < SPOT_COOLDOWN_MSEC:
-		return
-	_last_spot_msec = now
-	AudioManager.play("guard_spot_%d" % (randi() % SPOT_LINES + 1), -3.0)
+	if now - _last_voice_msec < VOICE_COOLDOWN_MSEC:
+		return false
+	_last_voice_msec = now
+	AudioManager.play("%s_%d" % [prefix, randi() % count + 1], -3.0)
+	return true
 
 func _do_patrol(p: Node2D) -> void:
 	if kind == Kind.RIFLE:
@@ -164,7 +169,7 @@ func _do_patrol(p: Node2D) -> void:
 		if p and _can_see(p):
 			state = State.ALERT
 			fire_timer = 0.6
-			_say_spotted()
+			_say("guard_spot", SPOT_LINES)
 		return
 	if patrol_distance <= 0.0:
 		velocity.x = 0.0
@@ -177,7 +182,7 @@ func _do_patrol(p: Node2D) -> void:
 	if p and _can_see(p):
 		state = State.ALERT
 		alert_timer = alert_memory
-		_say_spotted()
+		_say("guard_spot", SPOT_LINES)
 
 func _do_alert(p: Node2D, delta: float) -> void:
 	if kind == Kind.RIFLE:
@@ -185,6 +190,8 @@ func _do_alert(p: Node2D, delta: float) -> void:
 		if p == null or not _can_see(p):
 			aim_timer = 0.0
 			state = State.PATROL
+			announced_fire = false
+			_say("guard_lost", LOST_LINES)
 			queue_redraw()
 			return
 		_face(1 if p.global_position.x > global_position.x else -1)
@@ -199,6 +206,8 @@ func _do_alert(p: Node2D, delta: float) -> void:
 			if fire_timer <= 0.0:
 				aim_timer = telegraph_time
 				aim_target = p.global_position + Vector2(0, -42)
+				if not announced_fire and _say("guard_fire", FIRE_LINES):
+					announced_fire = true
 		return
 	# PATROL guard: charge
 	if p and _can_see(p):
@@ -207,6 +216,7 @@ func _do_alert(p: Node2D, delta: float) -> void:
 		alert_timer -= delta
 	if p == null or alert_timer <= 0.0:
 		state = State.PATROL
+		_say("guard_lost", LOST_LINES)
 		return
 	_face(1 if p.global_position.x > global_position.x else -1)
 	if not ledge_ray.is_colliding():

@@ -28,6 +28,7 @@ const PATHS := {
 	"guard_fire_2": "res://Assets/Sound/Voice/guard_fire_2.mp3",
 	"guard_die_1": "res://Assets/Sound/Voice/guard_die_1.mp3",
 	"guard_die_2": "res://Assets/Sound/Voice/guard_die_2.mp3",
+	"document_intel": "res://Assets/Sound/Voice/document_intel.mp3",
 	"pa_chime": "res://Assets/Sound/FX/pa_chime.wav",
 	"escape": "res://Assets/Sound/FX/escape.wav",
 	"level_complete": "res://Assets/Sound/FX/level_complete.wav",
@@ -74,6 +75,11 @@ func play(sfx_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	pool[0].volume_db = volume_db
 	pool[0].pitch_scale = pitch
 	pool[0].play()
+
+func length_of(sfx_name: String) -> float:
+	if streams.has(sfx_name) and streams[sfx_name]:
+		return streams[sfx_name].get_length()
+	return 0.0
 
 func play_music(music_name: String = "ambient", volume_db: float = -8.0, loop: bool = true) -> void:
 	music_on = loop

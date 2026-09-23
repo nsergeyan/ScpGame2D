@@ -25,8 +25,14 @@ func _on_body_entered(body):
 		AudioManager.play("coin")
 		GameManager.add_score()
 		if GameManager.score == 1:   # teach the mechanic the first time it matters
-			GameManager.show_message(
-				"Classified document recovered. The more you carry out, the higher your clearance rating.", 4.5)
+			# typed local: GDScript will not pass a bare array literal into an Array[String] parameter
+			var intel: Array[String] = [
+				"Classified document recovered.",
+				"Every file you carry out is another piece of what this place really is.",
+				"The more you take, the more you learn about the Foundation.",
+				"Somewhere in these files is the truth about SCP Foundation.",
+			]
+			GameManager.announce("document_intel", intel)
 		var tween = create_tween()
 		tween.tween_property(self, "scale", Vector2.ZERO, 0.1)
 		await tween.finished

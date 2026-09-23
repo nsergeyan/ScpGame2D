@@ -51,6 +51,20 @@ func set_hp(new_hp: int, new_max: int) -> void:
 func show_message(text: String, duration: float = 3.0) -> void:
 	message.emit(text, duration)
 
+# Plays a voice clip and splits its subtitle across lines, each shown for a
+# share of the audio proportional to its length. Kept here rather than on the
+# caller because the caller may be freed while this is still running.
+func announce(sfx: String, lines: Array[String]) -> void:
+	AudioManager.play(sfx, -2.0)
+	var total: float = AudioManager.length_of(sfx)
+	var chars := 0
+	for l in lines:
+		chars += l.length()
+	for l in lines:
+		var dur: float = total * float(l.length()) / maxf(chars, 1.0)
+		show_message(l, dur + 0.3)
+		await get_tree().create_timer(dur).timeout
+
 func format_time() -> String:
 	var t := int(run_time)
 	return "%d:%02d" % [floori(t / 60.0), t % 60]

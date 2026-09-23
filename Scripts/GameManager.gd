@@ -9,6 +9,7 @@ signal alarm_changed(on: bool)
 var player = null            # set by the player in _ready()
 var score: int = 0          
 var total_documents: int = 0 # how many exist in the level, counted at load
+var collected_entries: Array[int] = [] # indices into ScpArchive.ENTRIES
 var deaths: int = 0
 var run_time: float = 0.0
 var timer_running: bool = false
@@ -40,12 +41,17 @@ func reset_run() -> void:
 	announcing = false
 	voice_busy = false
 	message_until_msec = 0
+	collected_entries.clear()
 	has_keycard = false
 	alarm_on = false
 	AudioManager.stop_alarm()
 
 func add_score() -> void:
 	score += 1
+
+func collect_entry(i: int) -> void:
+	if i >= 0 and not collected_entries.has(i):
+		collected_entries.append(i)
 
 func set_hp(new_hp: int, new_max: int) -> void:
 	hp = new_hp
@@ -78,7 +84,7 @@ func announce(sfx: String, lines: Array[String]) -> void:
 	for l in lines:
 		var dur: float = total * float(l.length()) / maxf(chars, 1.0)
 		show_message(l, dur + 0.3, true)
-		await get_tree().create_timer(dur).timeout
+		await get_tree().create_timer(dur, false).timeout   # false: pauses with the tree
 	voice_busy = false
 
 func format_time() -> String:

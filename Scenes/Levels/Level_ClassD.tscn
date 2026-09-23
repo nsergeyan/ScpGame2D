@@ -493,6 +493,18 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
 text = "moves ONLY when you are not looking at it"
 
+[node name="ArchiveSign" type="Label" parent="WallText"]
+offset_left = 1216.0
+offset_top = 286.0
+offset_right = 1216.0
+offset_bottom = 286.0
+theme_override_fonts/font = ExtResource("28_1gt32")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+text = "RECOVERED FILES  -  press TAB to read"
+
 [node name="ExitLabel" type="Label" parent="WallText" unique_id=333087493]
 offset_left = 12928.0
 offset_top = 380.0

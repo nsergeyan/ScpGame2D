@@ -6,6 +6,7 @@ extends Area2D
 
 var time_passed = 0
 var initial_position := Vector2.ZERO
+var entry_index: int = -1   # set by Level.gd, indexes ScpArchive.ENTRIES
 
 func _ready():
 	add_to_group("documents")
@@ -24,6 +25,7 @@ func _on_body_entered(body):
 	if body.is_in_group("Player"):
 		AudioManager.play("coin")
 		GameManager.add_score()
+		GameManager.collect_entry(entry_index)
 		if GameManager.score == 1:   # teach the mechanic the first time it matters
 			# typed local: GDScript will not pass a bare array literal into an Array[String] parameter
 			var intel: Array[String] = [

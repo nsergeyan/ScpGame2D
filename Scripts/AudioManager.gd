@@ -82,6 +82,15 @@ func play(sfx_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 # One shared channel for guard radio chatter, so two guards can never talk over
 # each other. Returns false when a line is already playing and interrupt is off,
 # which lets the caller know it was not heard. Death cries pass interrupt.
+# Tree pause does not stop audio, since this node runs with PROCESS_MODE_ALWAYS.
+# The archive calls this so opening it silences music, voice, effects and siren.
+func set_paused(paused: bool) -> void:
+	music_player.stream_paused = paused
+	voice_player.stream_paused = paused
+	alarm_player.stream_paused = paused
+	for p in pool:
+		p.stream_paused = paused
+
 func play_voice(sfx_name: String, volume_db: float = -3.0, interrupt: bool = false) -> bool:
 	if not streams.has(sfx_name) or streams[sfx_name] == null:
 		return false

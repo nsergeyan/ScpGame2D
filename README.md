@@ -73,6 +73,10 @@ SCP Foundation emblem from
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SCP_Foundation_(emblem).svg),
 recoloured, used under CC BY-SA 3.0.
 
+Archive entries are quoted from the [SCP Wiki](https://scp-wiki.wikidot.com),
+licensed CC BY-SA 3.0. Each entry credits its own author in game and in
+`Scripts/ScpArchive.gd`, which also records the source URL.
+
 The starter kit's sound effects were generated with
 [gdfxr](https://github.com/timothyqiu/gdfxr).
 

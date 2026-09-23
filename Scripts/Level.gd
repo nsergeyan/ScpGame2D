@@ -38,7 +38,11 @@ func _ready() -> void:
 	cam.limit_bottom = level_height
 	voice = AudioStreamPlayer.new()
 	add_child(voice)
-	GameManager.total_documents = get_tree().get_nodes_in_group("documents").size()
+	var docs := get_tree().get_nodes_in_group("documents")
+	docs.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
+	for i in docs.size():
+		docs[i].entry_index = i          # first document met is archive entry 1
+	GameManager.total_documents = docs.size()
 	GameManager.timer_running = true
 	AudioManager.play_music("ambient", -9.0)
 	if play_announcement:
@@ -77,7 +81,8 @@ func _run_announcement() -> void:
 		var t := 0.0
 		while t < dur and not skipped:
 			await get_tree().process_frame
-			t += get_process_delta_time()
+			if not get_tree().paused:   # the archive freezes the announcement too
+				t += get_process_delta_time()
 	if stream and voice.playing and not skipped:
 		await voice.finished
 	voice.stop()

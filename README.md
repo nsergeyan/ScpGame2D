@@ -62,14 +62,14 @@ way:
 
 ## Credits
 
-Built on the 2D Platformer Starter Kit by Leon Oscar Kidando, MIT licensed.
-The starter kit provided the base player controller, the coin, and the scene
-transition system.
+Built on the [2D Platformer Starter Kit](https://github.com/AdilDevStuff/2D-Platformer-Starter-Kit)
+by Leon Oscar Kidando, MIT licensed. The starter kit provided the base player
+controller, the coin and the scene transition system.
 
-<!-- TODO: add the starter kit's repository URL once confirmed. -->
-<!-- TODO: confirm the art pack and its licence before making this repo public.
-     Filenames such as platformPack_tilesheet.png suggest Kenney's Platformer
-     Pack, but this has not been verified. -->
+Sprites and tilesheets by [Kenney](https://kenney.nl), released under CC0.
+
+The starter kit's sound effects were generated with
+[gdfxr](https://github.com/timothyqiu/gdfxr).
 
 ## License
 

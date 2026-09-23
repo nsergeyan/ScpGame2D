@@ -1,114 +1,73 @@
 [gd_scene format=3 uid="uid://l4if3usdv1wo"]
 
 [ext_resource type="Script" uid="uid://y0en2u86dsil" path="res://Scripts/TitleScreen.gd" id="1_gyje7"]
-[ext_resource type="Texture2D" uid="uid://3nrm4d4xs0yf" path="res://Assets/Sprites/classd.png" id="3_qfo3m"]
-[ext_resource type="Texture2D" uid="uid://dj6heo0p2n4qo" path="res://Assets/Sprites/guard.png" id="4_oi1up"]
-[ext_resource type="Texture2D" uid="uid://b21c4rd8uppdx" path="res://Assets/Sprites/statue.png" id="5_kfdur"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/scp_logo.svg" id="2_logo"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/scanlines.png" id="3_scan"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ithen"]
-atlas = ExtResource("3_qfo3m")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_15edo"]
-atlas = ExtResource("4_oi1up")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0oclb"]
-atlas = ExtResource("5_kfdur")
-region = Rect2(0, 0, 96, 96)
-
-[node name="Title" type="Control" unique_id=797734701]
+[node name="Title" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_gyje7")
 
-[node name="BG" type="ColorRect" parent="." unique_id=1613794299]
+[node name="BG" type="ColorRect" parent="."]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.03, 0.04, 0.07, 1)
+color = Color(0.02, 0.021, 0.026, 1)
 
-[node name="Floor" type="ColorRect" parent="." unique_id=1290778]
+[node name="Logo" type="TextureRect" parent="."]
 layout_mode = 0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -150.0
-color = Color(0.14, 0.16, 0.22, 1)
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.0
+offset_top = 70.0
+offset_right = 170.0
+offset_bottom = 410.0
+texture = ExtResource("2_logo")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 1, 1, 0.82)
 
-[node name="Title" type="Label" parent="." unique_id=1352364759]
+[node name="GameTitle" type="Label" parent="."]
 layout_mode = 0
 anchor_right = 1.0
-offset_top = 60.0
-offset_bottom = 188.8
-theme_override_colors/font_color = Color(1, 0.55, 0.1, 1)
-theme_override_constants/outline_size = 15
-theme_type_variation = &"Display"
-theme_override_font_sizes/font_size = 92
+offset_top = 430.0
+offset_bottom = 500.0
+theme_override_colors/font_color = Color(0.88, 0.88, 0.86, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 58
 text = "CLASS-D BREAKOUT"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="." unique_id=1933207526]
+[node name="Subtitle" type="Label" parent="."]
 layout_mode = 0
 anchor_right = 1.0
-offset_top = 175.0
-offset_bottom = 214.2
-theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
-theme_type_variation = &"Display"
-theme_override_font_sizes/font_size = 28
-text = "SCP FOUNDATION  -  SITE-19  -  CONTAINMENT FAILURE"
+offset_top = 506.0
+offset_bottom = 534.0
+theme_override_colors/font_color = Color(0.42, 0.44, 0.46, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 19
+text = "SITE-19     CONTAINMENT BREACH IN PROGRESS"
 horizontal_alignment = 1
 
-[node name="ClassD" type="TextureRect" parent="." unique_id=269025090]
-texture_filter = 1
-layout_mode = 0
-offset_left = 300.0
-offset_top = 330.0
-offset_right = 588.0
-offset_bottom = 618.0
-texture = SubResource("AtlasTexture_ithen")
-expand_mode = 1
-
-[node name="Guard" type="TextureRect" parent="." unique_id=1620579406]
-texture_filter = 1
-layout_mode = 0
-offset_left = 940.0
-offset_top = 330.0
-offset_right = 1228.0
-offset_bottom = 618.0
-texture = SubResource("AtlasTexture_15edo")
-expand_mode = 1
-flip_h = true
-
-[node name="Statue" type="TextureRect" parent="." unique_id=86938318]
-texture_filter = 1
-layout_mode = 0
-offset_left = 700.0
-offset_top = 330.0
-offset_right = 988.0
-offset_bottom = 618.0
-texture = SubResource("AtlasTexture_0oclb")
-expand_mode = 1
-
-[node name="Controls" type="Label" parent="." unique_id=1286955656]
+[node name="Prompt" type="Label" parent="."]
 layout_mode = 0
 anchor_right = 1.0
-offset_top = 610.0
-offset_bottom = 640.8
-theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
-theme_override_font_sizes/font_size = 22
-text = "A / D : move     SPACE: jump (again in mid-air = double jump)     F: punch"
-horizontal_alignment = 1
-
-[node name="Prompt" type="Label" parent="." unique_id=455663759]
-layout_mode = 0
-anchor_right = 1.0
-offset_top = 545.0
-offset_bottom = 601.0
-theme_override_constants/outline_size = 6
-theme_type_variation = &"Display"
-theme_override_font_sizes/font_size = 40
+offset_top = 618.0
+offset_bottom = 652.0
+theme_override_colors/font_color = Color(0.78, 0.79, 0.8, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 23
 text = "PRESS SPACE TO BEGIN"
 horizontal_alignment = 1
+
+[node name="Scanlines" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture_repeat = 2
+texture = ExtResource("3_scan")
+stretch_mode = 1

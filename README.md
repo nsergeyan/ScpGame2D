@@ -69,6 +69,10 @@ kit provided the base player controller, the coin and the scene transition syste
 
 Sprites and tilesheets by [Kenney](https://kenney.nl), released under CC0.
 
+SCP Foundation emblem from
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SCP_Foundation_(emblem).svg),
+recoloured, used under CC BY-SA 3.0.
+
 The starter kit's sound effects were generated with
 [gdfxr](https://github.com/timothyqiu/gdfxr).
 

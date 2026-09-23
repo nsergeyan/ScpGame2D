@@ -13,7 +13,7 @@ extends Node2D
 @export var announcement_lines: Array[String] = [
 	"ATTENTION. Site-19 is in full containment breach.",
 	"Class-D subject D-9341: your cell lock has failed.",
-	"Move with A and D, or the arrow keys. Jump with SPACE. Press SPACE again in mid-air to double jump.",
+	"Move with A and D. Jump with SPACE. Press SPACE again in mid-air to double jump.",
 	"Press F to punch guards, or jump on their heads to stomp them.",
 	"Beware SCP-173. It only moves when you are NOT looking at it. Keep it in sight!",
 	"Find the yellow keycard, reach the exit gate, and escape. Good luck, D-9341.",

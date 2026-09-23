@@ -38,6 +38,7 @@ func _ready() -> void:
 	cam.limit_bottom = level_height
 	voice = AudioStreamPlayer.new()
 	add_child(voice)
+	GameManager.total_documents = get_tree().get_nodes_in_group("documents").size()
 	GameManager.timer_running = true
 	AudioManager.play_music("ambient", -9.0)
 	if play_announcement:

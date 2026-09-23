@@ -8,6 +8,7 @@ signal alarm_changed(on: bool)
 
 var player = null            # set by the player in _ready()
 var score: int = 0          
+var total_documents: int = 0 # how many exist in the level, counted at load
 var deaths: int = 0
 var run_time: float = 0.0
 var timer_running: bool = false

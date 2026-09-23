@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Button.gd" id="1_d1dk7"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_msdqy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f15vc"]
+size = Vector2(48, 26)
+
+[node name="Button" type="Area2D" unique_id=1264408781]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_d1dk7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1642796533]
+texture = ExtResource("2_msdqy")
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(640, 320, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=846044354]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_f15vc")

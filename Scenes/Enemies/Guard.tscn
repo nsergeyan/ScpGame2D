@@ -1,0 +1,80 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Guard.gd" id="1_yy6wf"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/guard.png" id="2_p2jj0"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/Star Choco.ttf" id="3_yxhhp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh0bh"]
+atlas = ExtResource("2_p2jj0")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfkgd"]
+atlas = ExtResource("2_p2jj0")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjjks"]
+atlas = ExtResource("2_p2jj0")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxhue"]
+atlas = ExtResource("2_p2jj0")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ap7vh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh0bh")
+}],
+"loop": 1,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfkgd")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjjks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxhue")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8oer5"]
+radius = 22.0
+height = 80.0
+
+[node name="Guard" type="CharacterBody2D" unique_id=1222903076]
+collision_layer = 2
+script = ExtResource("1_yy6wf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1823347314]
+position = Vector2(0, -48)
+sprite_frames = SubResource("SpriteFrames_ap7vh")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1062463190]
+position = Vector2(0, -40)
+shape = SubResource("CapsuleShape2D_8oer5")
+
+[node name="AlertMark" type="Label" parent="." unique_id=539796477]
+offset_left = -10.0
+offset_top = -150.0
+offset_right = -10.0
+offset_bottom = -150.0
+theme_override_fonts/font = ExtResource("3_yxhhp")
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(1, 0.2, 0.15, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+text = "!"

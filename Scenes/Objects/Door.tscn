@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Door.gd" id="1_lgil6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eaxfl"]
+size = Vector2(64, 384)
+
+[node name="Door" type="StaticBody2D" unique_id=1467262124]
+z_index = -1
+script = ExtResource("1_lgil6")
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=220191160]
+position = Vector2(32, 192)
+shape = SubResource("RectangleShape2D_eaxfl")

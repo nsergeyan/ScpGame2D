@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Checkpoint.gd" id="1_awlgn"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_7vnxx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lo3y2"]
+size = Vector2(70, 200)
+
+[node name="Checkpoint" type="Area2D" unique_id=763252142]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_awlgn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=979031997]
+texture = ExtResource("2_7vnxx")
+offset = Vector2(0, -110)
+region_enabled = true
+region_rect = Rect2(320, 128, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1146043173]
+position = Vector2(0, -100)
+shape = SubResource("RectangleShape2D_lo3y2")

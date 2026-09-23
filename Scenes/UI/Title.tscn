@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://l4if3usdv1wo"]
+
+[ext_resource type="Script" uid="uid://y0en2u86dsil" path="res://Scripts/TitleScreen.gd" id="1_gyje7"]
+[ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="2_tt4j0"]
+[ext_resource type="Texture2D" uid="uid://3nrm4d4xs0yf" path="res://Assets/Sprites/classd.png" id="3_qfo3m"]
+[ext_resource type="Texture2D" uid="uid://dj6heo0p2n4qo" path="res://Assets/Sprites/guard.png" id="4_oi1up"]
+[ext_resource type="Texture2D" uid="uid://b21c4rd8uppdx" path="res://Assets/Sprites/statue.png" id="5_kfdur"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ithen"]
+atlas = ExtResource("3_qfo3m")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15edo"]
+atlas = ExtResource("4_oi1up")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0oclb"]
+atlas = ExtResource("5_kfdur")
+region = Rect2(0, 0, 96, 96)
+
+[node name="Title" type="Control" unique_id=797734701]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_gyje7")
+
+[node name="BG" type="ColorRect" parent="." unique_id=1613794299]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.03, 0.04, 0.07, 1)
+
+[node name="Floor" type="ColorRect" parent="." unique_id=1290778]
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+color = Color(0.14, 0.16, 0.22, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1352364759]
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 60.0
+offset_bottom = 188.8
+theme_override_colors/font_color = Color(1, 0.55, 0.1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("2_tt4j0")
+theme_override_font_sizes/font_size = 92
+text = "CLASS-D BREAKOUT"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="." unique_id=1933207526]
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 175.0
+offset_bottom = 214.2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_tt4j0")
+theme_override_font_sizes/font_size = 28
+text = "SCP FOUNDATION  -  SITE-19  -  CONTAINMENT FAILURE"
+horizontal_alignment = 1
+
+[node name="ClassD" type="TextureRect" parent="." unique_id=269025090]
+texture_filter = 1
+layout_mode = 0
+offset_left = 300.0
+offset_top = 330.0
+offset_right = 588.0
+offset_bottom = 618.0
+texture = SubResource("AtlasTexture_ithen")
+expand_mode = 1
+
+[node name="Guard" type="TextureRect" parent="." unique_id=1620579406]
+texture_filter = 1
+layout_mode = 0
+offset_left = 940.0
+offset_top = 330.0
+offset_right = 1228.0
+offset_bottom = 618.0
+texture = SubResource("AtlasTexture_15edo")
+expand_mode = 1
+flip_h = true
+
+[node name="Statue" type="TextureRect" parent="." unique_id=86938318]
+texture_filter = 1
+layout_mode = 0
+offset_left = 700.0
+offset_top = 330.0
+offset_right = 988.0
+offset_bottom = 618.0
+texture = SubResource("AtlasTexture_0oclb")
+expand_mode = 1
+
+[node name="Controls" type="Label" parent="." unique_id=1286955656]
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 610.0
+offset_bottom = 640.8
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 22
+text = "A / D : move     SPACE: jump (again in mid-air = double jump)     F: punch"
+horizontal_alignment = 1
+
+[node name="Prompt" type="Label" parent="." unique_id=455663759]
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 545.0
+offset_bottom = 601.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_tt4j0")
+theme_override_font_sizes/font_size = 40
+text = "PRESS SPACE TO BEGIN"
+horizontal_alignment = 1

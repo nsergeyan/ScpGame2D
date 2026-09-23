@@ -1,0 +1,156 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_qkbd8"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/classd.png" id="2_2ortc"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/CloudTexture.png" id="3_imvdw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wf5m"]
+atlas = ExtResource("2_2ortc")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywuut"]
+atlas = ExtResource("2_2ortc")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eri3q"]
+atlas = ExtResource("2_2ortc")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8iar"]
+atlas = ExtResource("2_2ortc")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4csm"]
+atlas = ExtResource("2_2ortc")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6srnc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wf5m")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywuut")
+}],
+"loop": 1,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eri3q")
+}],
+"loop": 0,
+"name": &"Punch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p8iar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4csm")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7vt35"]
+radius = 20.0
+height = 74.0
+
+[sub_resource type="Curve" id="Curve_7lrdb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_avmds"]
+offsets = PackedFloat32Array(0.25, 1)
+colors = PackedColorArray(0.8, 0.8, 0.85, 0.8, 0.8, 0.8, 0.85, 0)
+
+[sub_resource type="Gradient" id="Gradient_7myqs"]
+colors = PackedColorArray(1, 0.55, 0.1, 1, 1, 0.3, 0.1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_15610"]
+size = Vector2(36, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7f1t"]
+size = Vector2(70, 60)
+
+[node name="Player" type="CharacterBody2D" unique_id=1309744808 groups=["Player"]]
+z_index = 5
+collision_layer = 8
+script = ExtResource("1_qkbd8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1842089074]
+position = Vector2(0, -48)
+sprite_frames = SubResource("SpriteFrames_6srnc")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=214372030]
+position = Vector2(0, -37)
+shape = SubResource("CapsuleShape2D_7vt35")
+
+[node name="ParticleTrails" type="CPUParticles2D" parent="." unique_id=2038965881]
+position = Vector2(0, -6)
+emitting = false
+amount = 20
+texture = ExtResource("3_imvdw")
+lifetime = 0.4
+speed_scale = 0.8
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+damping_min = 1.0
+damping_max = 1.0
+scale_amount_min = 0.2
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_7lrdb")
+color_ramp = SubResource("Gradient_avmds")
+
+[node name="DeathParticles" type="CPUParticles2D" parent="." unique_id=193774522]
+position = Vector2(0, -40)
+emitting = false
+amount = 24
+texture = ExtResource("3_imvdw")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.4
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 300)
+initial_velocity_min = 120.0
+initial_velocity_max = 260.0
+scale_amount_min = 0.3
+scale_amount_max = 0.8
+color_ramp = SubResource("Gradient_7myqs")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1349140162]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=668069510]
+position = Vector2(0, -38)
+shape = SubResource("RectangleShape2D_15610")
+
+[node name="PunchArea" type="Area2D" parent="." unique_id=846782239]
+position = Vector2(52, -42)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea" unique_id=1954403910]
+shape = SubResource("RectangleShape2D_j7f1t")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=383079674]
+position = Vector2(0, -40)
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0

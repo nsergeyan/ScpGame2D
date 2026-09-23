@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/TriggerZone.gd" id="1_qtg6r"]
+
+[node name="TriggerZone" type="Area2D" unique_id=303306579]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_qtg6r")

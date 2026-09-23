@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/FallingPlatform.gd" id="1_pi6av"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0o1m"]
+size = Vector2(128, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76831"]
+size = Vector2(118, 18)
+
+[node name="FallingPlatform" type="StaticBody2D" unique_id=2040870477]
+script = ExtResource("1_pi6av")
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1057457032]
+position = Vector2(64, 16)
+shape = SubResource("RectangleShape2D_x0o1m")
+
+[node name="Trigger" type="Area2D" parent="." unique_id=577534505]
+collision_layer = 0
+collision_mask = 8
+
+[node name="TriggerShape" type="CollisionShape2D" parent="Trigger" unique_id=218395894]
+position = Vector2(64, -11)
+shape = SubResource("RectangleShape2D_76831")

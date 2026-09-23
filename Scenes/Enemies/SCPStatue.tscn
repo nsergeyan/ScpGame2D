@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/SCPStatue.gd" id="1_achl0"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/statue.png" id="2_mhb2b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nswh"]
+atlas = ExtResource("2_mhb2b")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60wmo"]
+atlas = ExtResource("2_mhb2b")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sw71b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nswh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60wmo")
+}],
+"loop": 0,
+"name": &"stone",
+"speed": 1.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tmxja"]
+radius = 22.0
+height = 84.0
+
+[node name="SCPStatue" type="CharacterBody2D" unique_id=1296677722]
+collision_layer = 2
+script = ExtResource("1_achl0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=657516828]
+position = Vector2(0, -48)
+sprite_frames = SubResource("SpriteFrames_sw71b")
+animation = &"stone"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1486046025]
+position = Vector2(0, -42)
+shape = SubResource("CapsuleShape2D_tmxja")

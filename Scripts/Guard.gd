@@ -158,6 +158,8 @@ func _physics_process(delta: float) -> void:
 # Radio chatter. The cooldown is static, shared by every guard, so they never
 # talk over each other no matter how many see the player at once.
 func _say(prefix: String, count: int) -> bool:
+	if GameManager.announcing or GameManager.voice_busy:
+		return false   # never talk over a facility announcement
 	var now := Time.get_ticks_msec()
 	if now - _last_voice_msec < VOICE_COOLDOWN_MSEC:
 		return false

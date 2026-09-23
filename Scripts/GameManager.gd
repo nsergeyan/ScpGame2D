@@ -13,6 +13,7 @@ var deaths: int = 0
 var run_time: float = 0.0
 var timer_running: bool = false
 var announcing: bool = false 
+var voice_busy: bool = false # a PA announcement is playing: guards stay quiet
 var hp: int = 3
 var max_hp: int = 3
 
@@ -36,6 +37,7 @@ func reset_run() -> void:
 	run_time = 0.0
 	timer_running = false
 	announcing = false
+	voice_busy = false
 	has_keycard = false
 	alarm_on = false
 	AudioManager.stop_alarm()
@@ -55,6 +57,7 @@ func show_message(text: String, duration: float = 3.0) -> void:
 # share of the audio proportional to its length. Kept here rather than on the
 # caller because the caller may be freed while this is still running.
 func announce(sfx: String, lines: Array[String]) -> void:
+	voice_busy = true
 	AudioManager.play(sfx, -2.0)
 	var total: float = AudioManager.length_of(sfx)
 	var chars := 0
@@ -64,6 +67,7 @@ func announce(sfx: String, lines: Array[String]) -> void:
 		var dur: float = total * float(l.length()) / maxf(chars, 1.0)
 		show_message(l, dur + 0.3)
 		await get_tree().create_timer(dur).timeout
+	voice_busy = false
 
 func format_time() -> String:
 	var t := int(run_time)

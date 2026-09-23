@@ -25,6 +25,7 @@ const BULLET_SCENE := preload("res://Scenes/Enemies/Bullet.tscn")
 const SPOT_LINES := 4
 const LOST_LINES := 3
 const FIRE_LINES := 2
+const DIE_LINES := 2
 const VOICE_COOLDOWN_MSEC := 2000
 
 var hp: int = 2
@@ -99,6 +100,7 @@ func _die(dir: int) -> void:
 	set_deferred("collision_layer", 0)
 	alert_mark.visible = false
 	AudioManager.play("guard_down")
+	_say("guard_die", DIE_LINES)
 	aim_timer = 0.0
 	queue_redraw()
 	var tw := create_tween()

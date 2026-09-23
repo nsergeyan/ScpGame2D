@@ -26,6 +26,8 @@ const PATHS := {
 	"guard_lost_3": "res://Assets/Sound/Voice/guard_lost_3.mp3",
 	"guard_fire_1": "res://Assets/Sound/Voice/guard_fire_1.mp3",
 	"guard_fire_2": "res://Assets/Sound/Voice/guard_fire_2.mp3",
+	"guard_die_1": "res://Assets/Sound/Voice/guard_die_1.mp3",
+	"guard_die_2": "res://Assets/Sound/Voice/guard_die_2.mp3",
 	"pa_chime": "res://Assets/Sound/FX/pa_chime.wav",
 	"escape": "res://Assets/Sound/FX/escape.wav",
 	"level_complete": "res://Assets/Sound/FX/level_complete.wav",

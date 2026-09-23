@@ -20,7 +20,9 @@ const PATHS := {
 	"pa_chime": "res://Assets/Sound/FX/pa_chime.wav",
 	"escape": "res://Assets/Sound/FX/escape.wav",
 	"level_complete": "res://Assets/Sound/FX/level_complete.wav",
-	"ambient": "res://Assets/Sound/Music/ambient_drone.wav",
+	"ambient": "res://Assets/Sound/Music/level_ambient.mp3",
+	"outro": "res://Assets/Sound/Music/outro.mp3",
+	"menu": "res://Assets/Sound/Music/menu_theme.mp3",
 	"alarm": "res://Assets/Sound/FX/alarm.wav",
 }
 
@@ -62,8 +64,8 @@ func play(sfx_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	pool[0].pitch_scale = pitch
 	pool[0].play()
 
-func play_music(music_name: String = "ambient", volume_db: float = -8.0) -> void:
-	music_on = true
+func play_music(music_name: String = "ambient", volume_db: float = -8.0, loop: bool = true) -> void:
+	music_on = loop
 	music_player.stream = streams[music_name]
 	music_player.volume_db = volume_db
 	music_player.play()

@@ -8,8 +8,8 @@ var t: float = 0.0
 @onready var prompt: Label = $Prompt
 
 func _ready() -> void:
-	AudioManager.stop_music()
 	AudioManager.stop_alarm()
+	AudioManager.play_music("outro", -10.0, false)
 	GameManager.alarm_on = false
 	stats.text = "Time: %s      Deaths: %d      Documents: %d" % [GameManager.format_time(), GameManager.deaths, GameManager.score]
 

@@ -7,8 +7,8 @@ var t: float = 0.0
 @onready var prompt: Label = $Prompt
 
 func _ready() -> void:
-	AudioManager.stop_music()
 	AudioManager.stop_alarm()
+	AudioManager.play_music("menu", -10.0)
 
 func _process(delta: float) -> void:
 	t += delta

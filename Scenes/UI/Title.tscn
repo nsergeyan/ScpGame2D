@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://l4if3usdv1wo"]
 
 [ext_resource type="Script" uid="uid://y0en2u86dsil" path="res://Scripts/TitleScreen.gd" id="1_gyje7"]
-[ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="2_tt4j0"]
 [ext_resource type="Texture2D" uid="uid://3nrm4d4xs0yf" path="res://Assets/Sprites/classd.png" id="3_qfo3m"]
 [ext_resource type="Texture2D" uid="uid://dj6heo0p2n4qo" path="res://Assets/Sprites/guard.png" id="4_oi1up"]
 [ext_resource type="Texture2D" uid="uid://b21c4rd8uppdx" path="res://Assets/Sprites/statue.png" id="5_kfdur"]
@@ -45,9 +44,8 @@ anchor_right = 1.0
 offset_top = 60.0
 offset_bottom = 188.8
 theme_override_colors/font_color = Color(1, 0.55, 0.1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
-theme_override_fonts/font = ExtResource("2_tt4j0")
+theme_type_variation = &"Display"
 theme_override_font_sizes/font_size = 92
 text = "CLASS-D BREAKOUT"
 horizontal_alignment = 1
@@ -58,9 +56,7 @@ anchor_right = 1.0
 offset_top = 175.0
 offset_bottom = 214.2
 theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("2_tt4j0")
+theme_type_variation = &"Display"
 theme_override_font_sizes/font_size = 28
 text = "SCP FOUNDATION  -  SITE-19  -  CONTAINMENT FAILURE"
 horizontal_alignment = 1
@@ -102,8 +98,6 @@ anchor_right = 1.0
 offset_top = 610.0
 offset_bottom = 640.8
 theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
 text = "A / D : move     SPACE: jump (again in mid-air = double jump)     F: punch"
 horizontal_alignment = 1
@@ -113,10 +107,8 @@ layout_mode = 0
 anchor_right = 1.0
 offset_top = 545.0
 offset_bottom = 601.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("2_tt4j0")
+theme_type_variation = &"Display"
 theme_override_font_sizes/font_size = 40
 text = "PRESS SPACE TO BEGIN"
 horizontal_alignment = 1

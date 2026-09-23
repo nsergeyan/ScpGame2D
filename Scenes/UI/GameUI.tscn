@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://igdlhq4tmj5d" path="res://Scripts/GameUI.gd" id="1_xkiwj"]
 [ext_resource type="Texture2D" uid="uid://jaegp53ccc7w" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_tog36"]
-[ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="3_fe2yh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_npa51"]
 atlas = ExtResource("2_tog36")
@@ -71,9 +70,7 @@ offset_top = -6.0
 offset_right = 56.0
 offset_bottom = -6.0
 theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("3_fe2yh")
+theme_type_variation = &"Display"
 theme_override_font_sizes/font_size = 28
 text = "x 0"
 
@@ -85,10 +82,8 @@ offset_left = -200.0
 offset_top = 14.0
 offset_right = -20.0
 offset_bottom = 60.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("3_fe2yh")
+theme_type_variation = &"Display"
 theme_override_font_sizes/font_size = 30
 text = "0:00"
 horizontal_alignment = 2
@@ -126,10 +121,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
 offset_right = -16.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -141,8 +132,6 @@ anchor_right = 1.0
 offset_top = 138.0
 offset_bottom = 166.0
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 18
 text = "ENTER - skip announcement"
 horizontal_alignment = 1

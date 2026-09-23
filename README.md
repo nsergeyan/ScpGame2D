@@ -62,9 +62,10 @@ way:
 
 ## Credits
 
-Built on the [2D Platformer Starter Kit](https://github.com/AdilDevStuff/2D-Platformer-Starter-Kit)
-by Leon Oscar Kidando, MIT licensed. The starter kit provided the base player
-controller, the coin and the scene transition system.
+Built on the [2D Platformer Starter Kit](https://godotengine.org/asset-library/asset/2201)
+by G2P Studios (Leon Oscar Kidando), MIT licensed
+([source](https://github.com/AdilDevStuff/2D-Platformer-Starter-Kit)). The starter
+kit provided the base player controller, the coin and the scene transition system.
 
 Sprites and tilesheets by [Kenney](https://kenney.nl), released under CC0.
 

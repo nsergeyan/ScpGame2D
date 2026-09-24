@@ -1,12 +1,15 @@
 # Autoload: plays sound effects, looping ambient music and the alarm siren.
-# Usage from any script:  AudioManager.play("punch")
+# Usage from any script:  AudioManager.play("jump")
 extends Node
 
 const PATHS := {
 	"jump": "res://Assets/Sound/FX/jump.wav",
+	"land": "res://Assets/Sound/FX/land.wav",
 	"coin": "res://Assets/Sound/FX/coin_pickup.wav",
-	"hurt": "res://Assets/Sound/FX/hurt.wav",
-	"punch": "res://Assets/Sound/FX/punch.wav",
+	"hurt_1": "res://Assets/Sound/FX/hurt_1.wav",
+	"hurt_2": "res://Assets/Sound/FX/hurt_2.wav",
+	"punch_1": "res://Assets/Sound/FX/punch_1.wav",
+	"punch_2": "res://Assets/Sound/FX/punch_2.wav",
 	"guard_hit": "res://Assets/Sound/FX/guard_hit.wav",
 	"guard_down": "res://Assets/Sound/FX/guard_down.wav",
 	"shoot": "res://Assets/Sound/FX/shoot.wav",
@@ -16,7 +19,7 @@ const PATHS := {
 	"keycard": "res://Assets/Sound/FX/keycard.wav",
 	"crumble": "res://Assets/Sound/FX/crumble.wav",
 	"zap": "res://Assets/Sound/FX/zap.wav",
-	"statue_step": "res://Assets/Sound/FX/statue_step.wav",
+	"statue_move": "res://Assets/Sound/FX/statue_move.wav",
 	"guard_spot_1": "res://Assets/Sound/Voice/guard_spot_1.mp3",
 	"guard_spot_2": "res://Assets/Sound/Voice/guard_spot_2.mp3",
 	"guard_spot_3": "res://Assets/Sound/Voice/guard_spot_3.mp3",
@@ -43,6 +46,8 @@ var pool: Array[AudioStreamPlayer] = []
 var music_player: AudioStreamPlayer
 var voice_player: AudioStreamPlayer
 var alarm_player: AudioStreamPlayer
+var statue_player: AudioStreamPlayer
+var statue_on := false
 var music_on := false
 var alarm_active := false
 
@@ -59,6 +64,8 @@ func _ready() -> void:
 	music_player = AudioStreamPlayer.new()
 	add_child(music_player)
 	music_player.finished.connect(func(): if music_on: music_player.play())
+	statue_player = AudioStreamPlayer.new()
+	add_child(statue_player)
 	alarm_player = AudioStreamPlayer.new()
 	add_child(alarm_player)
 	alarm_player.finished.connect(func(): if alarm_active: alarm_player.play())
@@ -88,6 +95,7 @@ func set_paused(paused: bool) -> void:
 	music_player.stream_paused = paused
 	voice_player.stream_paused = paused
 	alarm_player.stream_paused = paused
+	statue_player.stream_paused = paused
 	for p in pool:
 		p.stream_paused = paused
 
@@ -115,6 +123,23 @@ func play_music(music_name: String = "ambient", volume_db: float = -8.0, loop: b
 func stop_music() -> void:
 	music_on = false
 	music_player.stop()
+
+# SCP-173's drag is one continuous loop rather than discrete steps, so it is
+# held on its own channel and the volume follows the distance every frame.
+# Call this each frame while it moves; call stop_statue when it freezes.
+func drive_statue(volume_db: float) -> void:
+	statue_player.volume_db = volume_db
+	if statue_on:
+		return
+	statue_on = true
+	statue_player.stream = streams["statue_move"]
+	statue_player.play()
+
+func stop_statue() -> void:
+	if not statue_on:
+		return
+	statue_on = false
+	statue_player.stop()
 
 func start_alarm(volume_db: float = -14.0) -> void:
 	alarm_active = true

@@ -26,6 +26,9 @@ signal died
 @export var invincible_time: float = 1.2
 @export var stomp_bounce: float = 520.0
 
+const HURT_SOUNDS := 2
+const PUNCH_SOUNDS := 2
+
 var facing: int = 1
 var movement_enabled: bool = true
 var dead: bool = false
@@ -42,6 +45,7 @@ var punch_hit_done: bool = false
 var shake: float = 0.0
 var look_x: float = 0.0
 var was_on_floor: bool = false
+var fall_speed: float = 0.0   # downward speed carried into the landing
 var squash_tween: Tween
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -70,6 +74,7 @@ func _physics_process(delta: float) -> void:
 	if not on_floor:
 		var g := gravity * (fall_gravity_multiplier if velocity.y > 0.0 else 1.0)
 		velocity.y = minf(velocity.y + g * delta, max_fall_speed)
+		fall_speed = velocity.y   # move_and_slide zeroes this on contact, so remember it
 
 	# coyote time + refill jumps on the ground
 	if on_floor:
@@ -77,6 +82,7 @@ func _physics_process(delta: float) -> void:
 		jumps_left = max_jumps
 		if not was_on_floor:
 			_squash(Vector2(1.25, 0.8))
+			_land()
 	else:
 		coyote -= delta
 		if coyote <= 0.0 and jumps_left == max_jumps:
@@ -132,6 +138,14 @@ func _do_jump(power: float) -> void:
 	AudioManager.play("jump", -3.0, 1.0 if power >= 1.0 else 1.25)
 	_squash(Vector2(0.75, 1.3))
 
+# Landing volume tracks how far you fell, so stepping off a kerb is not the
+# same sound as dropping off the ceiling, and tiny hops stay silent.
+func _land() -> void:
+	if fall_speed < 220.0:
+		return
+	var t := clampf((fall_speed - 220.0) / (max_fall_speed - 220.0), 0.0, 1.0)
+	AudioManager.play("land", lerpf(-13.0, -2.0, t), randf_range(0.95, 1.06))
+
 func _squash(target: Vector2) -> void:
 	if dead:
 		return
@@ -146,7 +160,7 @@ func _start_punch() -> void:
 	punch_timer = punch_duration
 	punch_cd = punch_cooldown
 	punch_hit_done = false
-	AudioManager.play("punch", -4.0, randf_range(0.95, 1.1))
+	AudioManager.play("punch_%d" % (randi() % PUNCH_SOUNDS + 1), -4.0, randf_range(0.95, 1.1))
 
 func _update_punch(delta: float) -> void:
 	if punch_timer <= 0.0:
@@ -186,7 +200,7 @@ func hurt(dmg: int, from_x: float) -> void:
 		return
 	hp -= dmg
 	GameManager.set_hp(hp, max_hp)
-	AudioManager.play("hurt")
+	AudioManager.play("hurt_%d" % (randi() % HURT_SOUNDS + 1))
 	shake = 8.0
 	if hp <= 0:
 		die()
@@ -208,7 +222,7 @@ func die() -> void:
 	dead = true
 	GameManager.deaths += 1
 	velocity = Vector2.ZERO
-	AudioManager.play("hurt")
+	AudioManager.play("hurt_%d" % (randi() % HURT_SOUNDS + 1))
 	death_particles.restart()
 	death_particles.emitting = true
 	shake = 10.0

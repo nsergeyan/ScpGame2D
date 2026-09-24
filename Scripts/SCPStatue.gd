@@ -12,7 +12,6 @@ extends CharacterBody2D
 var active: bool = false
 var gone: bool = false
 var home: Vector2 = Vector2.ZERO
-var step_timer: float = 0.0
 var stone_tween: Tween
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -52,6 +51,7 @@ func _is_watched(p: Node2D) -> bool:
 
 func _physics_process(delta: float) -> void:
 	if gone:
+		AudioManager.stop_statue()
 		return
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -68,16 +68,16 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0.0
 	move_and_slide()
-	if moving and is_on_floor():
-		step_timer -= delta
-		if step_timer <= 0.0:
-			step_timer = 0.42
-			var d := 0.0
-			if is_instance_valid(p):
-				d = absf(p.global_position.x - global_position.x)
-			AudioManager.play("statue_step", clampf(-4.0 - d / 120.0, -24.0, -4.0))
+	if moving:
+		var d := 0.0
+		if is_instance_valid(p):
+			d = absf(p.global_position.x - global_position.x)
+		AudioManager.drive_statue(clampf(-5.0 - d / 90.0, -30.0, -5.0))
+	else:
+		AudioManager.stop_statue()   # silence the instant the player looks at it
 	if global_position.y > 860.0:
 		gone = true
+		AudioManager.stop_statue()
 		visible = false
 		shape.set_deferred("disabled", true)
 		GameManager.show_message("SCP-173 fell into the acid... Keep moving!", 3.0, true)

@@ -20,6 +20,7 @@ const PATHS := {
 	"crumble": "res://Assets/Sound/FX/crumble.wav",
 	"zap": "res://Assets/Sound/FX/zap.wav",
 	"statue_move": "res://Assets/Sound/FX/statue_move.wav",
+	"neck_snap": "res://Assets/Sound/FX/neck_snap.wav",
 	"guard_spot_1": "res://Assets/Sound/Voice/guard_spot_1.mp3",
 	"guard_spot_2": "res://Assets/Sound/Voice/guard_spot_2.mp3",
 	"guard_spot_3": "res://Assets/Sound/Voice/guard_spot_3.mp3",

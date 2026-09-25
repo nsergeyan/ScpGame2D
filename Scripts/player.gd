@@ -183,7 +183,7 @@ func _check_hurtbox() -> void:
 			return
 		if b.is_in_group("SCP"):
 			if b.has_method("is_deadly") and b.is_deadly():
-				die()
+				die("neck_snap")
 				return
 		elif b.is_in_group("Enemy") and b.has_method("can_hurt") and b.can_hurt():
 			var stomp := velocity.y > 60.0 and global_position.y < b.global_position.y - 42.0
@@ -216,13 +216,16 @@ func heal_full() -> void:
 	hp = max_hp
 	GameManager.set_hp(hp, max_hp)
 
-func die() -> void:
+func die(death_sound: String = "") -> void:
 	if dead:
 		return
 	dead = true
 	GameManager.deaths += 1
 	velocity = Vector2.ZERO
-	AudioManager.play("hurt_%d" % (randi() % HURT_SOUNDS + 1))
+	if death_sound != "":
+		AudioManager.play(death_sound)      # SCP-173 snaps your neck; acid and lasers do not
+	else:
+		AudioManager.play("hurt_%d" % (randi() % HURT_SOUNDS + 1))
 	death_particles.restart()
 	death_particles.emitting = true
 	shake = 10.0

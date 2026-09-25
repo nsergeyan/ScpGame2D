@@ -5,6 +5,7 @@ extends CharacterBody2D
 #  - Touching it = death. It cannot be hurt; it falls into pits and is gone.
 
 @export var chase_speed: float = 215.0
+@export var blink_speed: float = 900.0   # while the player's eyes are shut
 @export var start_active: bool = false
 @export var gravity: float = 1800.0
 @export var watch_distance: float = 1100.0
@@ -58,7 +59,12 @@ func _physics_process(delta: float) -> void:
 	var moving := false
 	var p = GameManager.player
 	if active and is_instance_valid(p) and not p.dead:
-		if _is_watched(p):
+		if BlinkUI.eyes_shut:
+			# eyes shut: it does not care where you were looking, and it lunges
+			velocity.x = signf(p.global_position.x - global_position.x) * blink_speed
+			sprite.frame = 1
+			moving = true
+		elif _is_watched(p):
 			velocity.x = 0.0
 			sprite.frame = 0
 		else:

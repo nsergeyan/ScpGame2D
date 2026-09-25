@@ -424,7 +424,7 @@ collision_layer = 2
 script = ExtResource("24_mk1mc")
 
 [node name="SCP173" type="CharacterBody2D" parent="Enemies" unique_id=1296677722 instance=ExtResource("26_0l7lb")]
-position = Vector2(9632, 576)
+position = Vector2(10112, 576)
 collision_layer = 2
 script = ExtResource("27_ec4pr")
 
@@ -492,6 +492,30 @@ theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
 text = "moves ONLY when you are not looking at it"
+
+[node name="HintStatue3" type="Label" parent="WallText"]
+offset_left = 9152.0
+offset_top = 392.0
+offset_right = 9152.0
+offset_bottom = 392.0
+theme_override_fonts/font = ExtResource("28_1gt32")
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+text = "you cannot stop yourself BLINKING"
+
+[node name="HintStatue4" type="Label" parent="WallText"]
+offset_left = 9152.0
+offset_top = 430.0
+offset_right = 9152.0
+offset_bottom = 430.0
+theme_override_fonts/font = ExtResource("28_1gt32")
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+text = "press E to blink while it is still far away"
 
 [node name="ArchiveSign" type="Label" parent="WallText"]
 offset_left = 1216.0

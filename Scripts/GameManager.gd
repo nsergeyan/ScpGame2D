@@ -19,6 +19,15 @@ var message_until_msec: int = 0 # an important message holds the box until this 
 var hp: int = 3
 var max_hp: int = 3
 
+# Taking the keycard starts a lockdown countdown. Reaching the gate stops it,
+# dying resets it with the keycard, and running it out ends the run.
+const ESCAPE_SECONDS := 114.5   # the detonation in alarm.mp3 lands here
+const END_SCENE := "res://Scenes/UI/EndScreen.tscn"
+
+var escape_left: float = 0.0
+var escape_running: bool = false
+var failed: bool = false
+
 var has_keycard: bool = false:
 	set(v):
 		has_keycard = v
@@ -32,6 +41,10 @@ var alarm_on: bool = false:
 func _process(delta: float) -> void:
 	if timer_running:
 		run_time += delta
+	if escape_running:
+		escape_left = maxf(escape_left - delta, 0.0)
+		if escape_left <= 0.0:
+			fail_escape()
 
 func reset_run() -> void:
 	score = 0
@@ -44,7 +57,35 @@ func reset_run() -> void:
 	collected_entries.clear()
 	has_keycard = false
 	alarm_on = false
+	escape_left = 0.0
+	escape_running = false
+	failed = false
 	AudioManager.stop_alarm()
+
+# Dying rewinds the keycard, but deliberately NOT the lockdown. The countdown
+# the breach started keeps running across deaths, siren and all, so dying costs
+# real time. Only reset_run() clears it, for a fresh attempt from the title.
+func clear_keycard() -> void:
+	has_keycard = false
+
+func start_escape_timer() -> void:
+	escape_left = ESCAPE_SECONDS
+	escape_running = true
+
+func stop_escape_timer() -> void:
+	escape_running = false
+
+# The lockdown ran out. No checkpoint saves this one.
+func fail_escape() -> void:
+	if failed:
+		return
+	failed = true
+	escape_running = false
+	timer_running = false
+	alarm_on = false
+	# the detonation is still playing: it rings out over the fade, and
+	# EndScreen stops it when the scene lands
+	SceneTransition.load_scene(load(END_SCENE))
 
 func add_score() -> void:
 	score += 1
@@ -86,6 +127,10 @@ func announce(sfx: String, lines: Array[String]) -> void:
 		show_message(l, dur + 0.3, true)
 		await get_tree().create_timer(dur, false).timeout   # false: pauses with the tree
 	voice_busy = false
+
+func format_escape() -> String:
+	var t: int = int(ceilf(escape_left))
+	return "%d:%02d" % [floori(t / 60.0), t % 60]
 
 func format_time() -> String:
 	var t := int(run_time)

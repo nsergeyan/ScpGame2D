@@ -1,5 +1,5 @@
 extends Control
-# Shown after the player escapes.
+# Shown after the player escapes, or after the lockdown countdown runs out.
 
 const TITLE := "res://Scenes/UI/Title.tscn"
 
@@ -13,6 +13,7 @@ const RANKS := [
 ]
 var started: bool = false
 var t: float = 0.0
+@onready var title: Label = $Title
 @onready var stats: Label = $Stats
 @onready var rank_label: Label = $Rank
 @onready var subtitle: Label = $Subtitle
@@ -24,9 +25,16 @@ func _ready() -> void:
 	GameManager.alarm_on = false
 	stats.text = "Time: %s      Deaths: %d      Documents: %d / %d" % [
 		GameManager.format_time(), GameManager.deaths, GameManager.score, GameManager.total_documents]
-	var r := _grade()
-	rank_label.text = "RANK  %s" % r[0]
-	subtitle.text = r[1]
+	if GameManager.failed:
+		# the scene's label is the green "YOU ESCAPED!", which is wrong for a loss
+		title.text = "YOU BLEW UP!"
+		title.add_theme_color_override("font_color", Color(1.0, 0.3, 0.25))
+		subtitle.text = "The warhead went off with you still underground."
+		rank_label.text = ""   # no grade for a run that ended in the blast
+	else:
+		var r := _grade()
+		rank_label.text = "RANK  %s" % r[0]
+		subtitle.text = r[1]
 
 # Graded on intel recovered (50), surviving (30) and speed (20).
 func _grade() -> Array:

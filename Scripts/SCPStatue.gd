@@ -4,14 +4,15 @@ extends CharacterBody2D
 #  - The moment the player looks away (faces the other direction) it chases.
 #  - Touching it = death. It cannot be hurt; it falls into pits and is gone.
 
-@export var chase_speed: float = 215.0
-@export var blink_speed: float = 900.0   # while the player's eyes are shut
+@export var chase_speed: float = 185.0
+@export var blink_speed: float = 650.0   # while the player's eyes are shut
 @export var start_active: bool = false
 @export var gravity: float = 1800.0
 @export var watch_distance: float = 1100.0
 @export var reset_freeze: float = 0.6   # held still and harmless right after a respawn
 
 var active: bool = false
+var woken: bool = false   # triggered once: stays awake through deaths
 var gone: bool = false
 var reset_timer: float = 0.0
 var home: Vector2 = Vector2.ZERO
@@ -30,6 +31,8 @@ func activate() -> void:
 	if active or gone:
 		return
 	active = true
+	woken = true
+	_arm_lockdown()
 	GameManager.show_message("SCP-173 is awake! It moves when you look away. Keep it in sight!", 4.0, true)
 
 func reset_to_start() -> void:
@@ -39,8 +42,20 @@ func reset_to_start() -> void:
 	reset_timer = reset_freeze
 	visible = true
 	shape.set_deferred("disabled", false)
-	active = start_active or GameManager.has_keycard   # chase again if the player already holds the keycard
+	active = start_active or woken   # a retry drops straight back into the hunt
+	if woken:
+		_arm_lockdown()   # the trigger is up on the overhang, out of reach from here
 	sprite.frame = 0
+
+# The breach is what arms the warhead, so the countdown covers the whole escape
+# from here: the loop-back, the keycard and the run to the gate. Starting it at
+# the keycard left 114s to do about 25s of work.
+func _arm_lockdown() -> void:
+	if GameManager.escape_running:
+		return   # already counting down, and a death must not rewind it
+	GameManager.alarm_on = true
+	GameManager.start_escape_timer()
+	AudioManager.start_alarm()
 
 func is_deadly() -> bool:
 	return not gone and reset_timer <= 0.0
@@ -94,4 +109,5 @@ func _physics_process(delta: float) -> void:
 		visible = false
 		shape.set_deferred("disabled", true)
 		GameManager.show_message("SCP-173 fell into the acid... Keep moving!", 3.0, true)
-		AudioManager.stop_alarm()   # siren stops, red lights keep pulsing until you escape
+		# The lockdown is NOT stopped here. Drowning it is the intended escape,
+		# and the countdown has to run to its detonation either way.

@@ -1,7 +1,7 @@
 extends Area2D
-# Yellow keycard: required to open the exit gate. Picking it up sets off the alarm.
+# Yellow keycard: required to open the exit gate. The lockdown is already
+# running by the time it can be reached, armed by the SCP-173 breach.
 
-@export var triggers_alarm: bool = true
 var t: float = 0.0
 var base_y: float = 0.0
 var taken: bool = false
@@ -22,10 +22,10 @@ func _physics_process(_delta: float) -> void:
 			taken = true
 			GameManager.has_keycard = true
 			AudioManager.play("keycard")
-			GameManager.show_message("KEYCARD ACQUIRED! The alarm is blaring - RUN to the exit!", 4.0, true)
-			if triggers_alarm:
-				GameManager.alarm_on = true
-				AudioManager.start_alarm()
+			if GameManager.escape_running:
+				GameManager.show_message("KEYCARD ACQUIRED! %s to reach the gate!" % GameManager.format_escape(), 4.0, true)
+			else:
+				GameManager.show_message("KEYCARD ACQUIRED! Get to the exit gate!", 4.0, true)
 			var tw := create_tween()
 			tw.tween_property(self, "scale", Vector2.ZERO, 0.15)
 			await tw.finished
@@ -33,4 +33,6 @@ func _physics_process(_delta: float) -> void:
 			break
 
 func reset_to_start() -> void:
-	pass   # once collected, the keycard stays collected
+	taken = false
+	scale = Vector2.ONE
+	show()

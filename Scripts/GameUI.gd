@@ -48,7 +48,16 @@ func _on_message(text: String, duration: float) -> void:
 func _process(delta: float) -> void:
 	t += delta
 	docs_label.text = "x %d" % GameManager.score
-	time_label.text = GameManager.format_time()
+	if GameManager.escape_running:
+		time_label.text = GameManager.format_escape()
+		# steady red, then flashing for the last 30 seconds
+		var a: float = 1.0
+		if GameManager.escape_left < 30.0:
+			a = 0.35 + 0.65 * (0.5 + 0.5 * sin(t * 10.0))
+		time_label.modulate = Color(1.0, 0.25, 0.2, a)
+	else:
+		time_label.text = GameManager.format_time()
+		time_label.modulate = Color(1, 1, 1, 1)
 	skip_hint.visible = GameManager.announcing
 	if GameManager.alarm_on:
 		alarm_overlay.color = Color(1, 0, 0, 0.05 + 0.09 * (0.5 + 0.5 * sin(t * 6.0)))

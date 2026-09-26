@@ -4,6 +4,9 @@ extends StaticBody2D
 # (or when the level calls open() - the cell door uses channel "cell").
 
 @export var channel: String = "A"
+# Most doors stay open once opened, so a puzzle is not repeated. A door that
+# gates a loop the player must run again has to shut behind them on a death.
+@export var relocks: bool = false
 @export var height_tiles: int = 6:
 	set(v):
 		height_tiles = maxi(v, 1)
@@ -17,6 +20,7 @@ const COLORS := {
 
 var opened: bool = false
 var origin: Vector2 = Vector2.ZERO
+var slide_tween: Tween
 @onready var shape: CollisionShape2D = $Shape
 
 func _ready() -> void:
@@ -48,8 +52,18 @@ func open() -> void:
 	opened = true
 	AudioManager.play("door", -2.0)
 	shape.set_deferred("disabled", true)
-	var tw := create_tween()
-	tw.tween_property(self, "position:y", origin.y - height_tiles * 64.0, 0.9).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	if slide_tween:
+		slide_tween.kill()
+	slide_tween = create_tween()
+	slide_tween.tween_property(self, "position:y", origin.y - height_tiles * 64.0, 0.9).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func reset_to_start() -> void:
-	pass   # doors stay open once opened
+	if not relocks or not opened:
+		return
+	# A death mid-slide would otherwise leave the tween running, and it would
+	# finish opening the door after the reset had already closed it.
+	if slide_tween:
+		slide_tween.kill()
+	opened = false
+	position = origin
+	shape.set_deferred("disabled", false)

@@ -239,6 +239,7 @@ func die(death_sound: String = "") -> void:
 	stun = 0.0
 	punch_timer = 0.0
 	GameManager.set_hp(hp, max_hp)
+	GameManager.clear_keycard()   # before the group call: the statue's reset reads it
 	get_tree().call_group("resettable", "reset_to_start")
 	await get_tree().create_timer(0.45).timeout
 	velocity = Vector2.ZERO

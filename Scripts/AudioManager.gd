@@ -39,7 +39,7 @@ const PATHS := {
 	"ambient": "res://Assets/Sound/Music/level_ambient.mp3",
 	"outro": "res://Assets/Sound/Music/outro.mp3",
 	"menu": "res://Assets/Sound/Music/menu_theme.mp3",
-	"alarm": "res://Assets/Sound/FX/alarm.wav",
+	"alarm": "res://Assets/Sound/FX/alarm.mp3",
 }
 
 var streams := {}
@@ -69,7 +69,8 @@ func _ready() -> void:
 	add_child(statue_player)
 	alarm_player = AudioStreamPlayer.new()
 	add_child(alarm_player)
-	alarm_player.finished.connect(func(): if alarm_active: alarm_player.play())
+	# The lockdown track is a one-shot sequence that ends in the detonation,
+	# so it is deliberately not relooped.
 
 func play(sfx_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	if not streams.has(sfx_name) or streams[sfx_name] == null:
@@ -142,12 +143,22 @@ func stop_statue() -> void:
 	statue_on = false
 	statue_player.stop()
 
-func start_alarm(volume_db: float = -14.0) -> void:
+# The lockdown has to be heard over the level ambience, which runs at -9, so it
+# plays loud and ducks the music under it. The track's own range does the rest:
+# the klaxons sit well below the detonation, which peaks near full scale.
+var music_db_before_alarm: float = 0.0
+
+func start_alarm(volume_db: float = -4.0) -> void:
+	if not alarm_active:
+		music_db_before_alarm = music_player.volume_db
+		music_player.volume_db = music_db_before_alarm - 14.0
 	alarm_active = true
 	alarm_player.stream = streams["alarm"]
 	alarm_player.volume_db = volume_db
 	alarm_player.play()
 
 func stop_alarm() -> void:
+	if alarm_active:
+		music_player.volume_db = music_db_before_alarm
 	alarm_active = false
 	alarm_player.stop()

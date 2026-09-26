@@ -112,6 +112,9 @@ licensed CC BY-SA 3.0. Each entry credits its own author in game and in
 The starter kit's sound effects were generated with
 [gdfxr](https://github.com/timothyqiu/gdfxr).
 
+The lockdown alarm is from the SCP: Secret Laboratory soundtrack, by
+Northwood Studios.
+
 ## License
 
 MIT. See `LICENSE`.

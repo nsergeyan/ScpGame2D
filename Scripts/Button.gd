@@ -11,6 +11,11 @@ var pressed: bool = false
 
 func _ready() -> void:
 	_set_region(0)
+	add_to_group("resettable")
+
+func reset_to_start() -> void:
+	pressed = false   # re-arm: a relocking door needs pressing again
+	_set_region(0)
 
 func _set_region(dx: int) -> void:
 	var c: Vector2i = TILES.get(channel, Vector2i(10, 5))
@@ -20,7 +25,7 @@ func _physics_process(_delta: float) -> void:
 	if pressed:
 		return
 	for b in get_overlapping_bodies():
-		if b.is_in_group("Player"):
+		if b.is_in_group("Player") and not b.dead:
 			pressed = true
 			_set_region(1)
 			AudioManager.play("button")

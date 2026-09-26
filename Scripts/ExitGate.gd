@@ -26,6 +26,7 @@ func _physics_process(delta: float) -> void:
 			used = true
 			b.movement_enabled = false
 			GameManager.timer_running = false
+			GameManager.stop_escape_timer()
 			AudioManager.stop_alarm()
 			AudioManager.play("escape")
 			SceneTransition.load_scene(load(END_SCENE))

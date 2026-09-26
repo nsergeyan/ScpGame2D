@@ -245,12 +245,6 @@ collision_layer = 0
 collision_mask = 8
 script = ExtResource("6_jjenl")
 
-[node name="Checkpoint_158" type="Area2D" parent="Checkpoints" unique_id=1729568470 instance=ExtResource("5_mwea8")]
-position = Vector2(10144, 576)
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("6_jjenl")
-
 [node name="Checkpoint_168" type="Area2D" parent="Checkpoints" unique_id=1988170717 instance=ExtResource("5_mwea8")]
 position = Vector2(10784, 576)
 collision_layer = 0

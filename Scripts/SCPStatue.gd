@@ -9,9 +9,11 @@ extends CharacterBody2D
 @export var start_active: bool = false
 @export var gravity: float = 1800.0
 @export var watch_distance: float = 1100.0
+@export var reset_freeze: float = 0.6   # held still and harmless right after a respawn
 
 var active: bool = false
 var gone: bool = false
+var reset_timer: float = 0.0
 var home: Vector2 = Vector2.ZERO
 var stone_tween: Tween
 
@@ -34,13 +36,14 @@ func reset_to_start() -> void:
 	global_position = home
 	velocity = Vector2.ZERO
 	gone = false
+	reset_timer = reset_freeze
 	visible = true
 	shape.set_deferred("disabled", false)
 	active = start_active or GameManager.has_keycard   # chase again if the player already holds the keycard
 	sprite.frame = 0
 
 func is_deadly() -> bool:
-	return not gone
+	return not gone and reset_timer <= 0.0
 
 func take_hit(_dmg: int, _dir: int) -> void:
 	# Punching stone hurts your hand. Avoid it instead!
@@ -54,11 +57,15 @@ func _physics_process(delta: float) -> void:
 	if gone:
 		AudioManager.stop_statue()
 		return
+	var p = GameManager.player
+	# The clock only runs once the player is back in control, otherwise the
+	# freeze is spent during the death animation.
+	if not (is_instance_valid(p) and p.dead):
+		reset_timer = maxf(reset_timer - delta, 0.0)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	var moving := false
-	var p = GameManager.player
-	if active and is_instance_valid(p) and not p.dead:
+	if active and is_instance_valid(p) and not p.dead and reset_timer <= 0.0:
 		if BlinkUI.eyes_shut:
 			# eyes shut: it does not care where you were looking, and it lunges
 			velocity.x = signf(p.global_position.x - global_position.x) * blink_speed

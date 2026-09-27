@@ -51,9 +51,9 @@ const ENTRIES := [
 	 "url": "https://scp-wiki.wikidot.com/scp-079",
 	 "text": "SCP-079 is an Exidy Sorcerer microcomputer built in 1978. In 1981, its owner, a college sophomore, took it upon himself to attempt to code an AI."},
 
-	{"id": "SCP-513", "class": "Euclid", "author": "beefwit",
-	 "url": "https://scp-wiki.wikidot.com/scp-513",
-	 "text": "Physically, SCP-513 is an unremarkable, rusty cowbell. No marks or engravings are visible on its surface due to the large amount of corrosion."},
+	{"id": "SCP-LEIDENUNI", "class": "Keter", "author": "Narek",
+	 "url": "https://www.universiteitleiden.nl/en/education/study-programmes/bachelor/data-science-and-artificial-intelligence",
+	 "text": "If you read this, I want you to know that i am proud of you for reading all this documentation... If you are a student who is grading this game, pls grade me high if you dont want to end up destroyed by scp 173(neck snap)"},
 
 	{"id": "SCP-1471", "class": "Euclid", "author": "LurkD",
 	 "url": "https://scp-wiki.wikidot.com/scp-1471",

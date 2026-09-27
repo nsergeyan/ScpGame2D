@@ -16,7 +16,7 @@ enum State { PATROL, ALERT, STUNNED, DEAD }
 @export var sight_height: float = 120.0
 @export var fire_interval: float = 2.2
 @export var telegraph_time: float = 0.5
-@export var bullet_speed: float = 380.0
+@export var bullet_speed: float = 450.0
 @export var gravity: float = 1800.0
 @export var start_facing: int = -1
 @export var alert_memory: float = 2.0

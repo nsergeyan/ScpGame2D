@@ -25,6 +25,7 @@ signal died
 @export var punch_cooldown: float = 0.38
 @export var invincible_time: float = 1.2
 @export var stomp_bounce: float = 520.0
+@export var climb_speed: float = 200.0
 
 const HURT_SOUNDS := 2
 const PUNCH_SOUNDS := 2
@@ -32,6 +33,7 @@ const PUNCH_SOUNDS := 2
 var facing: int = 1
 var movement_enabled: bool = true
 var dead: bool = false
+var climbing: bool = false
 var hp: int = 3
 var spawn_position: Vector2 = Vector2.ZERO
 var jumps_left: int = 2
@@ -68,6 +70,12 @@ func _physics_process(delta: float) -> void:
 	invincible = maxf(invincible - delta, 0.0)
 	stun = maxf(stun - delta, 0.0)
 	punch_cd = maxf(punch_cd - delta, 0.0)
+
+	# A ladder takes over movement entirely: no gravity, no friction, no
+	# jump buffer. It returns true for every frame it is driving the player.
+	if _update_climb():
+		return
+
 	var on_floor := is_on_floor()
 
 	# gravity (falls faster than it rises)
@@ -132,6 +140,54 @@ func _physics_process(delta: float) -> void:
 	_check_hurtbox()
 	if global_position.y > 900.0:   # fell out of the world
 		die()
+
+# ------------------------------------------------------------------ ladders
+func _ladder_here() -> Node2D:
+	for l in get_tree().get_nodes_in_group("ladders"):
+		if l.climb_rect().has_point(global_position):
+			return l
+	return null
+
+func _update_climb() -> bool:
+	var ladder: Node2D = _ladder_here()
+	var can_act := movement_enabled and stun <= 0.0
+	if not climbing:
+		if ladder == null or not can_act:
+			return false
+		if not (Input.is_action_pressed("Up") or Input.is_action_pressed("Down")):
+			return false
+		climbing = true
+		velocity = Vector2.ZERO
+		jump_buffer = 0.0   # otherwise a buffered jump fires the moment you grab on
+	if ladder == null or not can_act:
+		climbing = false
+		return false
+
+	var vy := Input.get_axis("Up", "Down")
+	var vx := Input.get_axis("Left", "Right")
+	if vy < 0.0 and global_position.y <= ladder.top_y():
+		vy = 0.0            # topped out: step off sideways rather than climb into the ceiling
+	velocity = Vector2(vx * climb_speed, vy * climb_speed)
+	if vx != 0.0:
+		facing = 1 if vx > 0.0 else -1
+	jumps_left = max_jumps  # letting go of a ladder gives the jumps back
+
+	if Input.is_action_just_pressed("Jump"):
+		climbing = false
+		velocity = Vector2(vx * move_speed, -jump_velocity)
+		jumps_left = max_jumps - 1
+		jump_buffer = 0.0
+		AudioManager.play("jump", -3.0)
+		_squash(Vector2(0.75, 1.3))
+		move_and_slide()
+		_check_hurtbox()
+		return true
+
+	move_and_slide()
+	if _ladder_here() == null or (is_on_floor() and vy > 0.0):
+		climbing = false
+	_check_hurtbox()   # SCP-173 and the acid still reach you on a ladder
+	return true
 
 func _do_jump(power: float) -> void:
 	velocity.y = -jump_velocity * power
@@ -252,7 +308,10 @@ func _process(delta: float) -> void:
 	if dead:
 		return
 	var anim := "Idle"
-	if punch_timer > 0.0:
+	if climbing:
+		# there is no climb animation, so Walk stands in while actually moving
+		anim = "Walk" if absf(velocity.y) > 10.0 or absf(velocity.x) > 10.0 else "Idle"
+	elif punch_timer > 0.0:
 		anim = "Punch"
 	elif not is_on_floor():
 		anim = "Jump"

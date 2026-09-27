@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://74efrwiuvoqx"]
 
-[ext_resource type="Script" path="res://Scripts/SCPStatue.gd" id="1_achl0"]
-[ext_resource type="Texture2D" path="res://Assets/Sprites/statue.png" id="2_mhb2b"]
+[ext_resource type="Script" uid="uid://boqj2scoufiqh" path="res://Scripts/SCPStatue.gd" id="1_achl0"]
+[ext_resource type="Texture2D" uid="uid://b21c4rd8uppdx" path="res://Assets/Sprites/statue.png" id="2_mhb2b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3nswh"]
 atlas = ExtResource("2_mhb2b")

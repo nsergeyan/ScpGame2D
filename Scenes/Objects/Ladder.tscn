@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Ladder.gd" id="1_ladr0"]
+
+[node name="Ladder" type="Node2D" unique_id=1729568480]
+script = ExtResource("1_ladr0")

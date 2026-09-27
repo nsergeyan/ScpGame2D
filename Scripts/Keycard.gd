@@ -33,6 +33,4 @@ func _physics_process(_delta: float) -> void:
 			break
 
 func reset_to_start() -> void:
-	taken = false
-	scale = Vector2.ONE
-	show()
+	pass   # once collected it stays collected, even across a death

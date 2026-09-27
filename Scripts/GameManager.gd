@@ -62,12 +62,6 @@ func reset_run() -> void:
 	failed = false
 	AudioManager.stop_alarm()
 
-# Dying rewinds the keycard, but deliberately NOT the lockdown. The countdown
-# the breach started keeps running across deaths, siren and all, so dying costs
-# real time. Only reset_run() clears it, for a fresh attempt from the title.
-func clear_keycard() -> void:
-	has_keycard = false
-
 func start_escape_timer() -> void:
 	escape_left = ESCAPE_SECONDS
 	escape_running = true

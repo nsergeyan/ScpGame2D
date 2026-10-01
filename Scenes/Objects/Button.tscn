@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/Button.gd" id="1_d1dk7"]
-[ext_resource type="Texture2D" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_msdqy"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/facility_tilesheet.png" id="2_msdqy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f15vc"]
 size = Vector2(48, 26)

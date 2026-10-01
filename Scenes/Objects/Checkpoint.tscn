@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/Checkpoint.gd" id="1_awlgn"]
-[ext_resource type="Texture2D" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_7vnxx"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/facility_tilesheet.png" id="2_7vnxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lo3y2"]
 size = Vector2(70, 200)

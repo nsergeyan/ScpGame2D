@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ca4kabnyrwwrt"]
 
 [ext_resource type="Script" uid="uid://igdlhq4tmj5d" path="res://Scripts/GameUI.gd" id="1_xkiwj"]
-[ext_resource type="Texture2D" uid="uid://jaegp53ccc7w" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_tog36"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/facility_tilesheet.png" id="2_tog36"]
 
 [ext_resource type="Texture2D" path="res://Assets/Sprites/document.png" id="4_doc"]
 

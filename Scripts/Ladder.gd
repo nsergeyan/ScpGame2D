@@ -1,7 +1,7 @@
 @tool
 extends Node2D
-# Climbable ladder. Drawn from the fence tile, which stacks into continuous
-# rails with the bars reading as rungs, so it needs no new art.
+# Climbable ladder. Drawn from the steel ladder tile in the facility sheet,
+# which has two rungs per tile so stacked copies form one continuous ladder.
 #
 # The player finds this through the "ladders" group and a plain rectangle test
 # rather than an Area2D, because Area2D overlap lists lag a physics frame and a
@@ -12,7 +12,7 @@ extends Node2D
 		tiles = maxi(v, 1)
 		queue_redraw()
 
-const TEX := preload("res://Assets/Spritesheet/platformPack_tilesheet.png")
+const TEX := preload("res://Assets/Spritesheet/facility_tilesheet.png")
 const REGION := Rect2(64, 256, 64, 64)
 
 func _ready() -> void:

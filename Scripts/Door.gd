@@ -13,9 +13,13 @@ extends StaticBody2D
 		if is_node_ready():
 			_refresh()
 
-const TEX := preload("res://Assets/Spritesheet/platformPack_tilesheet.png")
-const COLORS := {
-	"A": Vector2i(6, 0), "B": Vector2i(6, 1), "C": Vector2i(7, 0), "D": Vector2i(7, 1), "cell": Vector2i(4, 4),
+const TEX := preload("res://Assets/Spritesheet/facility_tilesheet.png")
+const BODY := Rect2(13 * 64, 1 * 64, 64, 64)      # steel leaf, see Tools/make_facility_tiles.py
+const FOOT := Rect2(12 * 64, 2 * 64, 64, 64)      # the same with a hazard band
+# Every door is the same grey steel now, so the channel is shown by a status
+# light in the colour of the button that opens it.
+const LIGHTS := {
+	"A": Color(0.25, 0.6, 1.0), "B": Color(0.3, 0.9, 0.4), "C": Color(1.0, 0.82, 0.2), "D": Color(1.0, 0.5, 0.15), "cell": Color(1.0, 0.25, 0.2),
 }
 
 var opened: bool = false
@@ -39,12 +43,13 @@ func _refresh() -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var c: Vector2i = COLORS.get(channel, Vector2i(6, 0))
 	for i in height_tiles:
-		draw_texture_rect_region(TEX, Rect2(0, i * 64.0, 64, 64), Rect2(c.x * 64, c.y * 64, 64, 64))
-	# hazard stripe so it reads as a door
+		draw_texture_rect_region(TEX, Rect2(0, i * 64.0, 64, 64), FOOT if i == height_tiles - 1 else BODY)
 	draw_rect(Rect2(0, 0, 64, 8), Color(0.1, 0.1, 0.1, 0.5))
-	draw_rect(Rect2(28, height_tiles * 32.0 - 20, 8, 40), Color(0, 0, 0, 0.45))
+	var lamp: Color = LIGHTS.get(channel, LIGHTS["A"])
+	var y := height_tiles * 32.0 - 12
+	draw_rect(Rect2(40, y - 4, 16, 24), Color(0.12, 0.12, 0.13))
+	draw_rect(Rect2(44, y, 8, 16), lamp)
 
 func open() -> void:
 	if opened:

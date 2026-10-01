@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/Keycard.gd" id="1_jjr6v"]
-[ext_resource type="Texture2D" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_8feut"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/facility_tilesheet.png" id="2_8feut"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q51i7"]
 radius = 34.0

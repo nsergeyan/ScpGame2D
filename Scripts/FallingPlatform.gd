@@ -12,7 +12,7 @@ extends StaticBody2D
 @export var respawn_time: float = 3.5
 @export var tile_region: Rect2 = Rect2(192, 128, 64, 32)   # yellow "unstable" block (top half)
 
-const TEX := preload("res://Assets/Spritesheet/platformPack_tilesheet.png")
+const TEX := preload("res://Assets/Spritesheet/facility_tilesheet.png")
 const THICK := 32.0
 
 var origin: Vector2 = Vector2.ZERO

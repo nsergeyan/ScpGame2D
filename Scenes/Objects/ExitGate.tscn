@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/ExitGate.gd" id="1_1v26g"]
-[ext_resource type="Texture2D" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="2_wo7xw"]
+[ext_resource type="Texture2D" path="res://Assets/Spritesheet/facility_tilesheet.png" id="2_wo7xw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yrb5m"]
 size = Vector2(56, 120)

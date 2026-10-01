@@ -16,7 +16,7 @@ var t: float = 0.0
 @onready var alarm_overlay: ColorRect = $AlarmOverlay
 
 func _ready() -> void:
-	var sheet: Texture2D = load("res://Assets/Spritesheet/platformPack_tilesheet.png")
+	var sheet: Texture2D = load("res://Assets/Spritesheet/facility_tilesheet.png")
 	heart_full = AtlasTexture.new()
 	heart_full.atlas = sheet
 	heart_full.region = Rect2(11 * 64, 4 * 64, 64, 64)

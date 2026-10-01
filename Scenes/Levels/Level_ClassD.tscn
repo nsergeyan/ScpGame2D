@@ -492,10 +492,10 @@ theme_override_constants/outline_size = 6
 text = "CELL BLOCK C"
 
 [node name="HintStatue1" type="Label" parent="WallText" unique_id=1718897369]
-offset_left = 9408.0
-offset_top = 300.0
-offset_right = 9408.0
-offset_bottom = 300.0
+offset_left = 8064.0
+offset_top = 220.0
+offset_right = 8064.0
+offset_bottom = 220.0
 theme_override_fonts/font = ExtResource("28_1gt32")
 theme_override_font_sizes/font_size = 40
 theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
@@ -504,52 +504,64 @@ theme_override_constants/outline_size = 6
 text = "SCP-173"
 
 [node name="HintStatue2" type="Label" parent="WallText" unique_id=721775078]
-offset_left = 9408.0
-offset_top = 350.0
-offset_right = 9408.0
-offset_bottom = 350.0
+offset_left = 8064.0
+offset_top = 270.0
+offset_right = 8064.0
+offset_bottom = 270.0
 theme_override_fonts/font = ExtResource("28_1gt32")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
-text = "moves ONLY when you are not looking at it"
+text = "It only moves when you are not looking at it"
 
 [node name="HintStatue3" type="Label" parent="WallText"]
-offset_left = 9408.0
-offset_top = 392.0
-offset_right = 9408.0
-offset_bottom = 392.0
+offset_left = 8064.0
+offset_top = 306.0
+offset_right = 8064.0
+offset_bottom = 306.0
 theme_override_fonts/font = ExtResource("28_1gt32")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
-text = "you cannot stop yourself BLINKING"
+text = "When you BLINK, it moves"
 
 [node name="HintLadder" type="Label" parent="WallText"]
-offset_left = 9856.0
-offset_top = 470.0
-offset_right = 9856.0
-offset_bottom = 470.0
+offset_left = 9872.0
+offset_top = 440.0
+offset_right = 9872.0
+offset_bottom = 440.0
 theme_override_fonts/font = ExtResource("28_1gt32")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
-text = "UP to climb"
+text = "UP ARROW: climb"
+
+[node name="HintLadder2" type="Label" parent="WallText"]
+offset_left = 9872.0
+offset_top = 476.0
+offset_right = 9872.0
+offset_bottom = 476.0
+theme_override_fonts/font = ExtResource("28_1gt32")
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+text = "DOWN ARROW: go down"
 
 [node name="HintStatue4" type="Label" parent="WallText"]
-offset_left = 9408.0
-offset_top = 430.0
-offset_right = 9408.0
-offset_bottom = 430.0
+offset_left = 8064.0
+offset_top = 342.0
+offset_right = 8064.0
+offset_bottom = 342.0
 theme_override_fonts/font = ExtResource("28_1gt32")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 6
-text = "press E to blink while it is still far away"
+text = "Press E to blink while it is still far away"
 
 [node name="ArchiveSign" type="Label" parent="WallText"]
 offset_left = 1216.0

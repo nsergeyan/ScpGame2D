@@ -22,6 +22,7 @@ enum State { PATROL, ALERT, STUNNED, DEAD }
 @export var alert_memory: float = 2.0
 
 const BULLET_SCENE := preload("res://Scenes/Enemies/Bullet.tscn")
+const UNSHADED := preload("res://Assets/Materials/unshaded.tres")
 const SPOT_LINES := 4
 const LOST_LINES := 3
 const FIRE_LINES := 2
@@ -47,6 +48,10 @@ var announced_fire: bool = false   # per guard: he only calls the shot once per 
 func _ready() -> void:
 	add_to_group("Enemy")
 	add_to_group("resettable")
+	# Only the guard's own _draw uses this material, which is just the laser
+	# sight: the sprite is a child and keeps the default, so it is still lit.
+	# The telegraph has to show in the dark or the shot cannot be dodged.
+	material = UNSHADED
 	hp = max_hp
 	home = global_position
 	facing = start_facing

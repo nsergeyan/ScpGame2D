@@ -13,11 +13,14 @@ extends Area2D
 @export var warn_time: float = 0.45
 @export var start_delay: float = 0.0
 
+const UNSHADED := preload("res://Assets/Materials/unshaded.tres")
+
 var mode: int = 0   # 0 off, 1 warning, 2 on
 var clock: float = 0.0
 @onready var shape: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
+	material = UNSHADED   # a beam is a light source, it should not sink into the dark
 	_refresh()
 
 func _refresh() -> void:

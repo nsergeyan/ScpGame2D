@@ -33,6 +33,10 @@ SCP-173.
   asymmetric gravity, squash-and-stretch, camera look-ahead and screen shake.
 - **Level hazards**: timed laser barriers, crumbling and moving platforms,
   climbable ladders, channel-based button and door puzzles, checkpoints.
+- **Containment Breach look**: the level is dark, lit in pools by ceiling
+  fluorescents that are placed by reading the tilemap. Some flicker, and all
+  of them turn red and pulse once the lockdown starts. A screen shader drains
+  the colour, tints it green-grey and adds a vignette and film grain.
 - **Voiced facility PA** and twelve lines of guard radio chatter.
 
 ## Controls
@@ -126,6 +130,9 @@ by G2P Studios (Leon Oscar Kidando), MIT licensed
 kit provided the base player controller, the coin and the scene transition system.
 
 Sprites and tilesheets by [Kenney](https://kenney.nl), released under CC0.
+The facility tiles (concrete, steel, doors, ladder, acid) are repainted from
+Kenney's sheet by `Tools/make_facility_tiles.py`, which leaves the original
+file untouched.
 
 SCP Foundation emblem from
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SCP_Foundation_(emblem).svg),

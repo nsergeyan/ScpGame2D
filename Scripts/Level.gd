@@ -10,6 +10,8 @@ extends Node2D
 @export var level_height: int = 768
 @export var play_announcement: bool = true
 @export var seconds_per_line: float = 4.5
+# Darkness, ceiling lamps and the screen grade. Untick to compare with flat lighting.
+@export var facility_lighting: bool = true
 @export var announcement_lines: Array[String] = [
 	"ATTENTION. Site-19 is in full containment breach.",
 	"Class-D subject D-9341: your cell lock has failed.",
@@ -28,6 +30,8 @@ const VOICE_PATHS := [
 var skipped: bool = false
 var voice: AudioStreamPlayer
 
+const FacilityLighting := preload("res://Scripts/FacilityLighting.gd")
+
 @onready var player = $Player
 
 func _ready() -> void:
@@ -38,6 +42,10 @@ func _ready() -> void:
 	cam.limit_bottom = level_height
 	voice = AudioStreamPlayer.new()
 	add_child(voice)
+	if facility_lighting:
+		var lighting := FacilityLighting.new()
+		add_child(lighting)
+		lighting.build(self, $Tiles/Ground, player, $GameUI)
 	var docs := get_tree().get_nodes_in_group("documents")
 	docs.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
 	for i in docs.size():

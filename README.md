@@ -14,17 +14,25 @@ SCP-173.
   archive doubles as a collection tracker and a reason to explore.
 - **Ranked escape**: the ending grades your run out of 100 on intel recovered
   (50), surviving (30) and speed (20), mapped to S through D.
-- **SCP-173 pursuit AI**: the statue is frozen while you face it and charges
-  the moment you look away. It cannot be killed, only outrun or lured into a
-  pit.
+- **Blink meter**: your eyes have to close every few seconds, and SCP-173
+  moves freely while they are shut. Blink early with `E` at a moment you
+  choose, or the meter forces one on you. The eye in the HUD glows red as
+  the statue closes in.
+- **SCP-173 loop-back**: the statue is frozen while you face it, and you face
+  the way you walk, so moving forward means turning your back on it. The
+  door out of its chamber is opened by a button behind the statue, so you
+  have to cross it twice. It cannot be killed, only drowned in acid.
+- **Lockdown countdown**: waking SCP-173 arms the site warhead. The keycard,
+  the loop-back and the run to the gate all happen against the clock, and
+  running out ends the run on its own screen. Dying does not rewind it.
 - **Guard AI state machine**: patrol, alert, stunned and dead states. Guards
   use raycast line-of-sight, so walls break their vision, and a downward
   raycast stops patrols walking off ledges. Rifle guards telegraph their shots
   with a red laser sight and call out over the radio.
 - **Platformer game feel**: coyote time, jump buffering, variable jump height,
   asymmetric gravity, squash-and-stretch, camera look-ahead and screen shake.
-- **Level hazards**: timed laser barriers, crumbling platforms, moving
-  platforms, channel-based button and door puzzles, checkpoints.
+- **Level hazards**: timed laser barriers, crumbling and moving platforms,
+  climbable ladders, channel-based button and door puzzles, checkpoints.
 - **Voiced facility PA** and twelve lines of guard radio chatter.
 
 ## Controls
@@ -33,6 +41,8 @@ SCP-173.
 |---|---|
 | Move | `A` / `D` |
 | Jump / double jump | `SPACE` or `W` |
+| Climb ladder | `↑` / `↓` |
+| Blink | `E` |
 | Punch | `F` or `J` |
 | Open archive | `TAB` |
 | Skip intro | `ENTER` |
@@ -45,11 +55,12 @@ Open the project folder in Godot 4.7 and press `F5`, or from a terminal:
 
 ## Architecture
 
-Four autoloaded singletons hold global state, declared in `project.godot`:
+Five autoloaded singletons hold global state, declared in `project.godot`:
 
 | Autoload | Responsibility |
 |---|---|
-| `GameManager` | HP, score, deaths, run timer, keycard and alarm flags, archive progress |
+| `GameManager` | HP, score, deaths, run timer, lockdown countdown, keycard and alarm flags, archive progress |
+| `BlinkUI` | the blink meter, the eyelid overlay, and the `eyes_shut` flag SCP-173 reads |
 | `AudioManager` | pooled sound effects, music, guard voice channel, alarm |
 | `ArchiveUI` | the pause-screen archive, built in code so it exists on every screen |
 | `SceneTransition` | fade animation between scenes |
@@ -87,6 +98,21 @@ suppressed hint can retry rather than being silently lost.
 `AudioManager`'s players (which run with `PROCESS_MODE_ALWAYS` and therefore
 ignore tree pause), and the announcement timers (`SceneTree.create_timer`
 defaults `process_always` to `true`).
+
+**Checkpoints retire what is behind them.** Dying resets the `resettable`
+group, which once meant a death near the exit relocked the SCP-173 wing and
+brought the statue back. Reaching a checkpoint now drops everything behind
+it out of the group. The checkpoint inside the wing opts out with
+`retires_previous = false`, because its loop-back sends you back past it.
+
+**The breach starts the clock, not the keycard.** Starting the countdown at
+the keycard left 114 seconds for about 25 seconds of work. Arming it when
+SCP-173 wakes means the whole loop-back is played under pressure.
+
+**Ladders use a rectangle test, not an Area2D.** An Area2D's overlap list
+lags one physics frame, and a climb that engages late feels broken. The
+player finds ladders through a group and checks its own position against
+each one's rectangle.
 
 **UI styling lives in one theme.** `Assets/UI/facility_theme.tres` is registered
 as the project-wide default, with a `Display` type variation carrying the

@@ -8,7 +8,7 @@ extends CanvasLayer
 # eyes_shut is what SCP-173 reads. While it is true the statue ignores where the
 # player is looking and lunges.
 
-const INTERVAL := 6.5      # seconds of held gaze before a blink is forced
+const INTERVAL := 5.0     # seconds of held gaze before a blink is forced
 const CLOSE := 0.13        # lids coming down: the player's warning frame
 const SHUT := 0.34         # blind, and the statue is free
 const OPEN := 0.18

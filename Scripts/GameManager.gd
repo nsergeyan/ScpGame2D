@@ -19,8 +19,8 @@ var message_until_msec: int = 0 # an important message holds the box until this 
 var hp: int = 3
 var max_hp: int = 3
 
-# Taking the keycard starts a lockdown countdown. Reaching the gate stops it,
-# dying resets it with the keycard, and running it out ends the run.
+# Waking SCP-173 starts a lockdown countdown (SCPStatue._arm_lockdown). Reaching
+# the gate stops it, dying does not rewind it, and running it out ends the run.
 const ESCAPE_SECONDS := 114.5   # the detonation in alarm.mp3 lands here
 const END_SCENE := "res://Scenes/UI/EndScreen.tscn"
 

@@ -7,13 +7,13 @@ signal keycard_changed(has: bool)
 signal alarm_changed(on: bool)
 
 var player = null            # set by the player in _ready()
-var score: int = 0          
+var score: int = 0
 var total_documents: int = 0 # how many exist in the level, counted at load
 var collected_entries: Array[int] = [] # indices into ScpArchive.ENTRIES
 var deaths: int = 0
 var run_time: float = 0.0
 var timer_running: bool = false
-var announcing: bool = false 
+var announcing: bool = false
 var voice_busy: bool = false # a PA announcement is playing: guards stay quiet
 var message_until_msec: int = 0 # an important message holds the box until this time
 var hp: int = 3
@@ -93,9 +93,9 @@ func set_hp(new_hp: int, new_max: int) -> void:
 	max_hp = new_max
 	hp_changed.emit(hp, max_hp)
 
-# Everything shares one message box, so a hint walked into mid-announcement
-# used to wipe the subtitle off the screen. Important messages (announcements,
-# story beats) reserve the box; ordinary ones are dropped while it is held.
+# Everything shares one message box. Important messages (announcements, story
+# beats) reserve it for their duration, and ordinary ones are dropped while it
+# is held, so a hint cannot wipe a subtitle.
 # Returns whether the message was actually shown.
 func show_message(text: String, duration: float = 3.0, important: bool = false) -> bool:
 	var now := Time.get_ticks_msec()

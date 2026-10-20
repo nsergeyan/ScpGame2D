@@ -18,6 +18,4 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		body.hurt(1, global_position.x - signf(velocity.x) * 10.0)
-		queue_free()
-	else:
-		queue_free()
+	queue_free()

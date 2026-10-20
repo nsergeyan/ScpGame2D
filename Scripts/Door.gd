@@ -1,7 +1,7 @@
 @tool
 extends StaticBody2D
-# NEW OBJECT 3b: sliding door. Opens when a Button with the same "channel" is pressed
-# (or when the level calls open() - the cell door uses channel "cell").
+# Sliding door. Opens when a Button on the same channel is pressed, or when
+# the level calls open(), as it does for the cell door on channel "cell".
 
 @export var channel: String = "A"
 # Most doors stay open once opened, so a puzzle is not repeated. A door that
@@ -16,8 +16,8 @@ extends StaticBody2D
 const TEX := preload("res://Assets/Spritesheet/facility_tilesheet.png")
 const BODY := Rect2(13 * 64, 1 * 64, 64, 64)      # steel leaf, see Tools/make_facility_tiles.py
 const FOOT := Rect2(12 * 64, 2 * 64, 64, 64)      # the same with a hazard band
-# Every door is the same grey steel now, so the channel is shown by a status
-# light in the colour of the button that opens it.
+# Doors share one steel texture, so the channel is shown by a status light
+# in the colour of the button that opens it.
 const LIGHTS := {
 	"A": Color(0.25, 0.6, 1.0), "B": Color(0.3, 0.9, 0.4), "C": Color(1.0, 0.82, 0.2), "D": Color(1.0, 0.5, 0.15), "cell": Color(1.0, 0.25, 0.2),
 }

@@ -3,12 +3,12 @@ extends CanvasLayer
 @onready var scene_transition_anim = $SceneTransitionAnim
 @onready var dissolve_rect = $DissolveRect
 
-# Scene Transition can be changed from the inspector(Currently only 2, fade and scale. You can add more!)
+# Transition style, chosen in the Inspector
 enum state {FADE, SCALE}
 @export var transition_type : state
 
 func _ready():
-	dissolve_rect.hide() 
+	dissolve_rect.hide()
 
 func load_scene(target_scene: PackedScene):
 	match transition_type:

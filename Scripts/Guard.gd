@@ -1,8 +1,8 @@
 extends CharacterBody2D
-# Facility guard. Two behaviours
-#  PATROL - walks back and forth, charges the player when he sees him. Melee.
-#  RIFLE  - stands still, aims (red laser sight), then fires a slow bullet. Walls/crates block his view.
-# The player can PUNCH guards (F) or STOMP them by landing on their head.(Like Mario)
+# Facility guard, in one of two kinds:
+#  PATROL walks back and forth and charges the player on sight (melee).
+#  RIFLE stands still, aims with a red laser sight, then fires a slow bullet.
+# Walls and crates block line of sight. Guards can be punched or stomped.
 
 enum Kind { PATROL, RIFLE }
 enum State { PATROL, ALERT, STUNNED, DEAD }
@@ -40,7 +40,7 @@ var aim_target: Vector2 = Vector2.ZERO
 var hit_flash: float = 0.0
 var invuln: float = 0.0
 var ledge_ray: RayCast2D
-var announced_fire: bool = false   # per guard: he only calls the shot once per engagement
+var announced_fire: bool = false   # each guard calls the shot once per engagement
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var alert_mark: Label = $AlertMark

@@ -1,6 +1,6 @@
 extends Area2D
-# NEW OBJECT 3a: floor button (external trigger). Stand on it to open every Door
-# with the same "channel" letter (A blue, B green, C yellow, D orange).
+# Floor button. Stepping on it opens every Door on the same channel
+# (A blue, B green, C yellow, D orange).
 
 @export var channel: String = "A"
 

@@ -1,10 +1,10 @@
 extends Node2D
 # Level controller: camera limits, ambient music, and the opening announcement.
 #
-# ELEVENLABS VOICE: put your exported file at  res://Assets/Sound/Voice/announcement.mp3
-# (or .ogg / .wav). While it plays, the subtitles below are shown and the cell door stays
-# locked. When it ends the cell door opens. No file? The subtitles alone play, timed by
-# "seconds_per_line".  Edit the subtitle lines in the Inspector (they are split by length).
+# The announcement plays Assets/Sound/Voice/announcement (.mp3, .ogg or .wav)
+# with announcement_lines as subtitles, each shown for a share of the clip
+# proportional to its length. Without a clip the subtitles run on
+# seconds_per_line. The cell door opens when the announcement ends.
 
 @export var level_width: int = 12160
 @export var level_height: int = 768

@@ -1,7 +1,7 @@
 @tool
 extends StaticBody2D
-# NEW OBJECT 1: crumbling platform. Shakes when the player steps on it, falls, then respawns.
-# Change "tiles" (width), "fall_delay" and "respawn_time" in the Inspector.
+# Crumbling platform: shakes when the player steps on it, falls, then respawns
+# after respawn_time. Width is set in tiles.
 
 @export var tiles: int = 2:
 	set(v):

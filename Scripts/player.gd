@@ -1,7 +1,7 @@
 extends CharacterBody2D
-#double jump ON by default, coyote time,
-# jump buffering, variable jump height (release SPACE early = short hop),
-# heavier fall gravity, acceleration/friction, plus a PUNCH attack and 3 HP.
+# Player controller: double jump, coyote time, jump buffering, variable jump
+# height (releasing jump early gives a short hop), heavier fall gravity,
+# acceleration and friction, ladders, a punch, and 3 HP.
 
 signal died
 

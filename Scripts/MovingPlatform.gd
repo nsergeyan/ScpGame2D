@@ -1,7 +1,7 @@
 @tool
 extends AnimatableBody2D
-# NEW OBJECT 2: moving platform for timed jumps. It glides between its start
-# position and start + travel, pausing at each end. Edit "travel" in the Inspector.
+# Moving platform. Glides between its start position and start + travel,
+# pausing at each end.
 
 @export var tiles: int = 2:
 	set(v):

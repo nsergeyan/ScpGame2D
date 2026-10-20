@@ -1,7 +1,7 @@
 @tool
 extends Area2D
-# NEW OBJECT 4: timed laser barrier. OFF -> WARNING (flickers) -> ON (deadly) -> OFF ...
-# Walk through while it is off. "start_delay" shifts the rhythm between lasers.
+# Timed laser barrier. Cycles off, warning (flickering), then on (deadly).
+# start_delay offsets the cycle so neighbouring lasers can alternate.
 
 @export var height_tiles: int = 6:
 	set(v):

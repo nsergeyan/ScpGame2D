@@ -1,8 +1,7 @@
 extends CharacterBody2D
-# SCP-173 style statue.
-#  - It is FROZEN while the player is facing it.
-#  - The moment the player looks away (faces the other direction) it chases.
-#  - Touching it = death. It cannot be hurt; it falls into pits and is gone.
+# SCP-173. Frozen while the player faces it, chases as soon as they face
+# away, and lunges while their eyes are shut. Touching it kills. It cannot
+# be hurt, only lost to a fall into the acid.
 
 @export var chase_speed: float = 185.0
 @export var blink_speed: float = 650.0   # while the player's eyes are shut
@@ -47,9 +46,8 @@ func reset_to_start() -> void:
 		_arm_lockdown()   # the trigger is up on the overhang, out of reach from here
 	sprite.frame = 0
 
-# The breach is what arms the warhead, so the countdown covers the whole escape
-# from here: the loop-back, the keycard and the run to the gate. Starting it at
-# the keycard left 114s to do about 25s of work.
+# The breach arms the warhead, so the countdown covers the rest of the escape:
+# the loop-back, the keycard and the run to the gate.
 func _arm_lockdown() -> void:
 	if GameManager.escape_running:
 		return   # already counting down, and a death must not rewind it
@@ -61,7 +59,7 @@ func is_deadly() -> bool:
 	return not gone and reset_timer <= 0.0
 
 func take_hit(_dmg: int, _dir: int) -> void:
-	# Punching stone hurts your hand. Avoid it instead!
+	# Stone does not take damage; the punch only makes a dull thud.
 	AudioManager.play("guard_hit", -6.0, 0.6)
 
 func _is_watched(p: Node2D) -> bool:
@@ -109,5 +107,5 @@ func _physics_process(delta: float) -> void:
 		visible = false
 		shape.set_deferred("disabled", true)
 		GameManager.show_message("SCP-173 fell into the acid... Keep moving!", 3.0, true)
-		# The lockdown is NOT stopped here. Drowning it is the intended escape,
-		# and the countdown has to run to its detonation either way.
+		# The lockdown keeps running. Losing the statue in the acid is the
+		# intended way past it, and the countdown still ends in the detonation.

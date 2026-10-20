@@ -125,6 +125,14 @@ func _show(v: bool) -> void:
 func _set_lids(p: float) -> void:
 	lid_top.anchor_bottom = 0.52 * p
 	lid_low.anchor_top = 1.0 - 0.52 * p
+	# Setting an anchor shifts the offsets to keep the old pixel size, which
+	# left a 32 px strip on screen after a blink. Pin them to the anchors.
+	lid_top.offset_top = 0.0
+	lid_top.offset_bottom = 0.0
+	lid_low.offset_top = 0.0
+	lid_low.offset_bottom = 0.0
+	lid_top.visible = p > 0.0
+	lid_low.visible = p > 0.0
 
 func _statue_awake() -> bool:
 	for s in get_tree().get_nodes_in_group("SCP"):
